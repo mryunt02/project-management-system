@@ -19,26 +19,30 @@ export const register = async (req: Request, res: Response): Promise<void> => {
 };
 
 // Giriş yapma
-export const login = async (req: Request, res: Response): Promise<void> => {
+export const login = async (req: Request, res: Response) => {
   const { email, password } = req.body;
 
   try {
     const user = await User.findOne({ email });
+
+    // Kullanıcı bulunamazsa hata döndür
     if (!user) {
-      res.status(400).json({ error: 'Geçersiz kimlik bilgileri' });
+      return res.status(404).json({ message: 'User not found' });
     }
 
     const isPasswordValid = await bcrypt.compare(password, user.password);
+
+    // Şifre geçerli değilse hata döndür
     if (!isPasswordValid) {
-      res.status(400).json({ error: 'Geçersiz kimlik bilgileri' });
-      return;
+      return res.status(401).json({ message: 'Invalid credentials' });
     }
 
     const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET || '', {
       expiresIn: '1h',
     });
-    res.json({ token });
+
+    return res.status(200).json({ token });
   } catch (error) {
-    res.status(500).json({ error: 'Giriş başarısız' });
+    return res.status(500).json({ message: 'Server error' });
   }
 };

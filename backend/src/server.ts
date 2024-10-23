@@ -7,6 +7,7 @@ dotenv.config();
 
 const app = express();
 app.use(express.json());
+console.log('Connecting to MongoDB with URI:', process.env.MONGODB_URI);
 
 // MongoDB bağlantısı
 mongoose
@@ -17,7 +18,7 @@ mongoose
 // Rotaları kullan
 app.use('/api', authRoutes);
 
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 5001;
 app.listen(PORT, () => {
   console.log(`Sunucu ${PORT} portunda çalışıyor`);
 });
