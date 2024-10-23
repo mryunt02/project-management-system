@@ -13,7 +13,7 @@ export const register = async (req: Request, res: Response): Promise<void> => {
     await newUser.save();
     res.status(201).json({ message: 'Kullanıcı başarıyla kaydedildi' });
   } catch (error) {
-    res.status(400).json({ error: 'Kullanıcı kaydı başarısız' });
+    res.status(400).json({ message: 'Kullanıcı kaydı başarısız' });
     return;
   }
 };
@@ -27,7 +27,7 @@ export const login = async (req: Request, res: Response) => {
 
     // Kullanıcı bulunamazsa hata döndür
     if (!user) {
-      return res.status(404).json({ message: 'User not found' });
+      return res.status(404).json({ message: 'User not found!' });
     }
 
     const isPasswordValid = await bcrypt.compare(password, user.password);
