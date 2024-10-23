@@ -3,11 +3,8 @@
 
 import React from 'react';
 import Header from '@/components/header';
+import TimeComponent from '@/components/time-component';
 
 export default function Home() {
-  return (
-    <div>
-      <Header />
-    </div>
-  );
+  return <div>qweqwewq</div>;
 }
