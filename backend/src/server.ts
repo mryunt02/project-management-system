@@ -2,10 +2,13 @@ import express from 'express';
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 import authRoutes from './routes/authRoutes';
+import cors from 'cors';
 
 dotenv.config();
 
 const app = express();
+
+app.use(cors());
 app.use(express.json());
 console.log('Connecting to MongoDB with URI:', process.env.MONGODB_URI);
 
