@@ -1,5 +1,4 @@
 import './globals.css';
-import Script from 'next/script';
 
 export const metadata = {
   title: 'Authentication App',
@@ -13,17 +12,6 @@ export default function RootLayout({
 }) {
   return (
     <html lang='tr'>
-      <head>
-        <link
-          rel='stylesheet'
-          href='https://cdn.jsdelivr.net/npm/@trendyol/baklava@3.2.0/dist/themes/default.css'
-        />
-        <Script
-          strategy='afterInteractive'
-          type='module'
-          src='https://cdn.jsdelivr.net/npm/@trendyol/baklava@3.2.0/dist/baklava.js'
-        />
-      </head>
       <body>{children}</body>
     </html>
   );

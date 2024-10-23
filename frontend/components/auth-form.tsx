@@ -59,13 +59,15 @@ const AuthForm: React.FC<AuthFormProps> = ({ isLogin }) => {
   };
 
   return (
-    <div className='bg-slate-500 h-[100svh] flex items-center justify-center'>
+    <div className='bg-blue-300 h-[100svh] flex items-center justify-center'>
       <div className='px-5 py-10 bg-white rounded-xl flex flex-col items-center gap-3 min-w-[500px]'>
         <div className='flex gap-2 self-baseline items-center'>
           <Link
             href='/login'
             className={
-              currentPath === '/login' ? 'rounded bg-slate-500 px-4 py-2' : ''
+              currentPath === '/login'
+                ? 'rounded bg-blue-300 px-4 py-2 text-white'
+                : 'hover:underline'
             }
           >
             Login
@@ -74,8 +76,8 @@ const AuthForm: React.FC<AuthFormProps> = ({ isLogin }) => {
             href='/register'
             className={
               currentPath === '/register'
-                ? 'rounded bg-slate-500 px-4 py-2'
-                : ''
+                ? 'rounded bg-blue-300 px-4 py-2 text-white'
+                : 'hover:underline'
             }
           >
             Register
@@ -97,7 +99,7 @@ const AuthForm: React.FC<AuthFormProps> = ({ isLogin }) => {
             onChange={(e) => setPassword(e.target.value)}
             required
           />
-          <Button type='submit' className='bg-slate-500 hover:bg-slate-400'>
+          <Button type='submit' className='bg-blue-300 hover:bg-blue-200'>
             {isLogin ? 'Login' : 'Register'}
           </Button>
         </form>
