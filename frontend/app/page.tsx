@@ -22,7 +22,7 @@ export default function Home() {
   };
 
   if (!isAuthenticated) {
-    return null; // Render nothing while checking authentication
+    return; // Render nothing while checking authentication
   }
 
   return (

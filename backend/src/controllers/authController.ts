@@ -9,6 +9,7 @@ export const register = async (req: Request, res: Response): Promise<void> => {
 
   // Şifre doğrulama
   if (password !== confirmPassword) {
+    console.log(password, confirmPassword);
     res.status(400).json({ message: 'Şifreler uyuşmuyor' });
     return;
   }

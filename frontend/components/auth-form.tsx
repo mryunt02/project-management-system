@@ -1,10 +1,13 @@
 'use client';
+
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { usePathname, useRouter } from 'next/navigation';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
+import { useDispatch } from 'react-redux';
+import { login } from '../redux/reducers/authReducer';
 
 interface AuthFormProps {
   isLogin: boolean;
@@ -18,24 +21,22 @@ const AuthForm: React.FC<AuthFormProps> = ({ isLogin }) => {
   const [surname, setSurname] = useState('');
   const [message, setMessage] = useState('');
   const [isError, setIsError] = useState(false);
-  const [token, setToken] = useState('');
   const router = useRouter();
   const currentPath = usePathname();
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    // Check if the token exists in localStorage
     const existingToken = localStorage.getItem('token');
     if (existingToken) {
-      router.push('/'); // Redirect to homepage if token exists
+      router.push('/');
     }
   }, [router]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    // Şifre onayı kontrolü
     if (!isLogin && password !== confirmPassword) {
-      setMessage('Şifreler uyuşmuyor');
+      setMessage('Passwords do not match');
       setIsError(true);
       return;
     }
@@ -44,13 +45,14 @@ const AuthForm: React.FC<AuthFormProps> = ({ isLogin }) => {
       const endpoint = isLogin
         ? 'http://localhost:5001/api/login'
         : 'http://localhost:5001/api/register';
-
-      const data = isLogin
-        ? { email, password }
-        : { email, password, name, surname, confirmPassword };
-
-      const response = await axios.post(endpoint, data);
-      setToken(response.data.token);
+      const response = await axios.post(endpoint, {
+        email,
+        password,
+        confirmPassword,
+        name: isLogin ? undefined : name,
+        surname: isLogin ? undefined : surname,
+      });
+      dispatch(login({ user: { email }, token: response.data.token }));
       localStorage.setItem('token', response.data.token);
       setMessage(isLogin ? 'Giriş başarılı' : 'Kayıt başarılı');
       setIsError(false);
