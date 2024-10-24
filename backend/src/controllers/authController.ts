@@ -13,6 +13,10 @@ export const register = async (req: Request, res: Response): Promise<void> => {
     res.status(400).json({ message: 'Şifreler uyuşmuyor' });
     return;
   }
+  if (password.length < 8) {
+    res.status(400).json({ message: 'Şifre en az 8 karakter olmalıdır' });
+    return;
+  }
 
   // İsim ve soyisim doğrulama
   if (!name || !surname) {
