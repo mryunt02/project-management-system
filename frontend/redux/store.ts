@@ -9,8 +9,6 @@ const store = configureStore({
 });
 const token = localStorage.getItem('token');
 const user = localStorage.getItem('user');
-console.log(token);
-console.log(user);
 
 if (token && user) {
   store.dispatch(login({ user: JSON.parse(user), token }));

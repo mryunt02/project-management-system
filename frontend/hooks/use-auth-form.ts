@@ -23,7 +23,6 @@ const useAuthForm = ({ isLogin }: UseAuthFormProps) => {
   const [isError, setIsError] = useState(false);
   const router = useRouter();
   const dispatch = useDispatch();
-  console.log('user', user);
 
   useEffect(() => {
     const existingToken = localStorage.getItem('token');
@@ -34,7 +33,6 @@ const useAuthForm = ({ isLogin }: UseAuthFormProps) => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    debugger;
 
     if (!isLogin && password !== confirmPassword) {
       setMessage('Passwords do not match');
