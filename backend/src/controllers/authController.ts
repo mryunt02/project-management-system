@@ -40,7 +40,9 @@ export const register = async (req: Request, res: Response): Promise<void> => {
       surname,
     });
     await newUser.save();
-    res.status(201).json({ message: 'User successfully registered' });
+    res
+      .status(201)
+      .json({ message: 'User successfully registered', user: newUser });
   } catch (error) {
     res.status(500).json({ message: 'User registration failed' });
     return;
@@ -70,12 +72,10 @@ export const login = async (req: Request, res: Response) => {
       expiresIn: '1h',
     });
 
-    return res
-      .status(200)
-      .json({
-        token,
-        user: { email: user.email, name: user.name, surname: user.surname },
-      });
+    return res.status(200).json({
+      token,
+      user: { email: user.email, name: user.name, surname: user.surname },
+    });
   } catch (error) {
     return res.status(500).json({ message: 'Server error' });
   }

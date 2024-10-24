@@ -10,9 +10,6 @@ const store = configureStore({
 const token = localStorage.getItem('token');
 const user = localStorage.getItem('user');
 
-if (token && user) {
-  store.dispatch(login({ user: JSON.parse(user), token }));
-}
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
 
