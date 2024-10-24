@@ -7,8 +7,10 @@ const store = configureStore({
     auth: authReducer,
   },
 });
-const token = localStorage.getItem('token');
-const user = localStorage.getItem('user');
+if (typeof window !== 'undefined') {
+  const token = localStorage.getItem('token');
+  const user = localStorage.getItem('user');
+}
 
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;

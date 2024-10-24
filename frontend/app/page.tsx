@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import type { RootState } from '@/redux/store'; // Adjust the path as necessary
 
 export default function Home() {
@@ -14,11 +14,14 @@ export default function Home() {
   } | null;
 
   useEffect(() => {
-    const token = localStorage.getItem('token');
-    if (!token) {
-      router.push('/login'); // Redirect to the login page if no token is found
-    } else {
-      setIsAuthenticated(true); // Set authentication state to true if token is found
+    if (typeof window !== 'undefined') {
+      const token = localStorage.getItem('token');
+
+      if (!token) {
+        router.push('/login'); // Redirect to the login page if no token is found
+      } else {
+        setIsAuthenticated(true); // Set authentication state to true if token is found
+      }
     }
   }, [router]);
 
