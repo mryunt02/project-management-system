@@ -56,8 +56,10 @@ const AuthForm: React.FC<AuthFormProps> = ({ isLogin }) => {
         name: isLogin ? undefined : name,
         surname: isLogin ? undefined : surname,
       });
-      dispatch(login({ user: { email }, token: response.data.token }));
+      const user = { email, name, surname };
+      dispatch(login({ user, token: response.data.token }));
       localStorage.setItem('token', response.data.token);
+      localStorage.setItem('user', JSON.stringify(user));
       setMessage(isLogin ? 'Giriş başarılı' : 'Kayıt başarılı');
       setIsError(false);
       router.push('/');
