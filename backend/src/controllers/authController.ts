@@ -5,11 +5,29 @@ import jwt from 'jsonwebtoken';
 
 // Kayıt olma
 export const register = async (req: Request, res: Response): Promise<void> => {
-  const { email, password } = req.body;
+  const { email, password, confirmPassword, name, surname } = req.body;
+
+  // Şifre doğrulama
+  if (password !== confirmPassword) {
+    res.status(400).json({ message: 'Şifreler uyuşmuyor' });
+    return;
+  }
+
+  // İsim ve soyisim doğrulama
+  if (!name || !surname) {
+    res.status(400).json({ message: 'İsim ve soyisim gerekli' });
+    return;
+  }
+
   const hashedPassword = await bcrypt.hash(password, 10);
 
   try {
-    const newUser = new User({ email, password: hashedPassword });
+    const newUser = new User({
+      email,
+      password: hashedPassword,
+      name,
+      surname,
+    });
     await newUser.save();
     res.status(201).json({ message: 'Kullanıcı başarıyla kaydedildi' });
   } catch (error) {

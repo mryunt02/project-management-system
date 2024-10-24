@@ -13,6 +13,9 @@ interface AuthFormProps {
 const AuthForm: React.FC<AuthFormProps> = ({ isLogin }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [name, setName] = useState('');
+  const [surname, setSurname] = useState('');
   const [message, setMessage] = useState('');
   const [isError, setIsError] = useState(false);
   const [token, setToken] = useState('');
@@ -29,14 +32,24 @@ const AuthForm: React.FC<AuthFormProps> = ({ isLogin }) => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    // Şifre onayı kontrolü
+    if (!isLogin && password !== confirmPassword) {
+      setMessage('Şifreler uyuşmuyor');
+      setIsError(true);
+      return;
+    }
+
     try {
       const endpoint = isLogin
         ? 'http://localhost:5001/api/login'
         : 'http://localhost:5001/api/register';
-      const response = await axios.post(endpoint, {
-        email,
-        password,
-      });
+
+      const data = isLogin
+        ? { email, password }
+        : { email, password, name, surname, confirmPassword };
+
+      const response = await axios.post(endpoint, data);
       setToken(response.data.token);
       localStorage.setItem('token', response.data.token);
       setMessage(isLogin ? 'Giriş başarılı' : 'Kayıt başarılı');
@@ -85,6 +98,24 @@ const AuthForm: React.FC<AuthFormProps> = ({ isLogin }) => {
         </div>
         <h2 className='text-[40px]'>{isLogin ? 'Login' : 'Register'}</h2>
         <form onSubmit={handleSubmit} className='flex flex-col gap-3 w-full'>
+          {!isLogin && (
+            <div className='flex gap-2'>
+              <Input
+                type='text'
+                placeholder='Name'
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                required
+              />
+              <Input
+                type='text'
+                placeholder='Surname'
+                value={surname}
+                onChange={(e) => setSurname(e.target.value)}
+                required
+              />
+            </div>
+          )}
           <Input
             type='email'
             placeholder='Email Address'
@@ -99,6 +130,15 @@ const AuthForm: React.FC<AuthFormProps> = ({ isLogin }) => {
             onChange={(e) => setPassword(e.target.value)}
             required
           />
+          {!isLogin && (
+            <Input
+              type='password'
+              placeholder='Confirm Password'
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
+              required
+            />
+          )}
           <Button type='submit' className='bg-blue-300 hover:bg-blue-200'>
             {isLogin ? 'Login' : 'Register'}
           </Button>
