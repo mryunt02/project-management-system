@@ -9,24 +9,30 @@ export const register = async (req: Request, res: Response): Promise<void> => {
 
   // Şifre doğrulama
   if (password !== confirmPassword) {
-    console.log(password, confirmPassword);
-    res.status(400).json({ message: 'Şifreler uyuşmuyor' });
+    res.status(400).json({ message: 'Passwords do not match' });
     return;
   }
   if (password.length < 8) {
-    res.status(400).json({ message: 'Şifre en az 8 karakter olmalıdır' });
+    res.status(400).json({ message: 'Password must be at least 8 characters' });
     return;
   }
 
   // İsim ve soyisim doğrulama
   if (!name || !surname) {
-    res.status(400).json({ message: 'İsim ve soyisim gerekli' });
+    res.status(400).json({ message: 'Name and surname required' });
     return;
   }
 
-  const hashedPassword = await bcrypt.hash(password, 10);
-
   try {
+    // Email doğrulama
+    const existingUser = await User.findOne({ email });
+    if (existingUser) {
+      res.status(400).json({ message: 'This email is already registered' });
+      return;
+    }
+
+    const hashedPassword = await bcrypt.hash(password, 10);
+
     const newUser = new User({
       email,
       password: hashedPassword,
@@ -34,9 +40,9 @@ export const register = async (req: Request, res: Response): Promise<void> => {
       surname,
     });
     await newUser.save();
-    res.status(201).json({ message: 'Kullanıcı başarıyla kaydedildi' });
+    res.status(201).json({ message: 'User successfully registered' });
   } catch (error) {
-    res.status(400).json({ message: 'Kullanıcı kaydı başarısız' });
+    res.status(500).json({ message: 'User registration failed' });
     return;
   }
 };
