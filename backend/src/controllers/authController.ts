@@ -70,7 +70,12 @@ export const login = async (req: Request, res: Response) => {
       expiresIn: '1h',
     });
 
-    return res.status(200).json({ token });
+    return res
+      .status(200)
+      .json({
+        token,
+        user: { email: user.email, name: user.name, surname: user.surname },
+      });
   } catch (error) {
     return res.status(500).json({ message: 'Server error' });
   }

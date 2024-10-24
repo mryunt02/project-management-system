@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { login } from '../redux/reducers/authReducer';
 
 interface UseAuthFormProps {
@@ -9,15 +9,21 @@ interface UseAuthFormProps {
 }
 
 const useAuthForm = ({ isLogin }: UseAuthFormProps) => {
-  const [email, setEmail] = useState('');
+  const user = useSelector(
+    (state: {
+      auth: { user: { email: string; name: string; surname: string } };
+    }) => state.auth.user
+  );
+  const [email, setEmail] = useState(user?.email || '');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-  const [name, setName] = useState('');
-  const [surname, setSurname] = useState('');
+  const [name, setName] = useState(user?.name || '');
+  const [surname, setSurname] = useState(user?.surname || '');
   const [message, setMessage] = useState('');
   const [isError, setIsError] = useState(false);
   const router = useRouter();
   const dispatch = useDispatch();
+  console.log('user', user);
 
   useEffect(() => {
     const existingToken = localStorage.getItem('token');
@@ -28,6 +34,7 @@ const useAuthForm = ({ isLogin }: UseAuthFormProps) => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    debugger;
 
     if (!isLogin && password !== confirmPassword) {
       setMessage('Passwords do not match');
@@ -43,11 +50,11 @@ const useAuthForm = ({ isLogin }: UseAuthFormProps) => {
         email,
         password,
         confirmPassword,
-        name: isLogin ? undefined : name,
-        surname: isLogin ? undefined : surname,
+        name,
+        surname,
       });
-      const user = { email, name, surname };
-      dispatch(login({ user, token: response.data.token }));
+      const { user, token } = response.data;
+      dispatch(login({ user, token }));
       localStorage.setItem('token', response.data.token);
       localStorage.setItem('user', JSON.stringify(user));
       setMessage(isLogin ? 'Giriş başarılı' : 'Kayıt başarılı');
@@ -55,7 +62,7 @@ const useAuthForm = ({ isLogin }: UseAuthFormProps) => {
       router.push('/');
     } catch (error: unknown) {
       if (axios.isAxiosError(error) && error.response) {
-        console.error('Error response:', error.response);
+        // console.error('Error response:', error.response);
         setMessage(error.response.data.message);
       } else {
         console.error('Unexpected error:', error);

@@ -4,7 +4,6 @@ import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useDispatch, useSelector } from 'react-redux';
 import type { RootState } from '@/redux/store'; // Adjust the path as necessary
-import { logout } from '@/redux/reducers/authReducer';
 
 export default function Home() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -13,7 +12,6 @@ export default function Home() {
     name: string;
     surname: string;
   } | null;
-  const dispatch = useDispatch();
 
   useEffect(() => {
     const token = localStorage.getItem('token');
@@ -44,7 +42,6 @@ export default function Home() {
       </header>
       <button
         onClick={() => {
-          dispatch(logout());
           handleLogout();
         }}
         className='bg-slate-500 text-white px-4 py-2 rounded hover:bg-slate-400'
