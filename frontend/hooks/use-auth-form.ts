@@ -26,10 +26,9 @@ const useAuthForm = ({ isLogin }: UseAuthFormProps) => {
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
-      const token = localStorage.getItem('token');
-
-      if (!token) {
-        router.push('/login');
+      const existingToken = localStorage.getItem('token');
+      if (existingToken) {
+        router.push('/');
       }
     }
   }, [router]);
