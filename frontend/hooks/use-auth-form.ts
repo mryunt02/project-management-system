@@ -55,8 +55,10 @@ const useAuthForm = ({ isLogin }: UseAuthFormProps) => {
       });
       const { user, token } = response.data;
       dispatch(login({ user, token }));
-      localStorage.setItem('token', response.data.token);
-      localStorage.setItem('user', JSON.stringify(user));
+      if (typeof window !== 'undefined') {
+        localStorage.setItem('token', response.data.token);
+        localStorage.setItem('user', JSON.stringify(user));
+      }
       setMessage(isLogin ? 'Giriş başarılı' : 'Kayıt başarılı');
       setIsError(false);
       router.push('/');

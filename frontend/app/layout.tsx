@@ -2,8 +2,9 @@ import Providers from '@/components/Providers';
 import './globals.css';
 
 export const metadata = {
-  title: 'Authentication App',
-  description: 'Kayıt ve giriş uygulaması',
+  title: 'Project Management System',
+  description:
+    'A project management system for managing projects and tasks. Built with React, TypeScript, and Express.',
 };
 
 export default function RootLayout({
