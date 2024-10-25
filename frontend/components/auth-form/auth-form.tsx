@@ -34,18 +34,18 @@ const AuthForm: React.FC<AuthFormProps> = ({ isLogin }) => {
 
   return (
     <div className='bg-blue-400 h-[100svh] flex items-center justify-center form-bg'>
-      <div className='flex flex-col items-center w-full md:w-auto'>
+      <div
+        className={`flex flex-col items-center w-[90%] md:w-auto ${
+          !isLogin ? 'order-2' : 'order-0'
+        }`}
+      >
         <div
           className='block
        md:hidden absolute top-10 w-[85%]'
         >
           <Image src={yuntlogo} alt='yunt logo' />
         </div>
-        <div
-          className={`px-5 py-10 bg-white flex flex-col items-center gap-3 md:w-[425px] h-[451px] rounded-2xl w-[90%] md:rounded-none md${
-            !isLogin ? 'order-2' : 'order-0'
-          }`}
-        >
+        <div className='px-5 py-10 bg-white flex flex-col items-center gap-3 md:w-[425px] h-[451px] rounded-2xl  md:rounded-none md'>
           <h2 className='text-[40px] self-baseline'>
             {isLogin ? 'Login' : 'Register'}
           </h2>
