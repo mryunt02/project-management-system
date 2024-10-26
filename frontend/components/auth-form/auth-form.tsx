@@ -34,17 +34,16 @@ const AuthForm: React.FC<AuthFormProps> = ({ isLogin }) => {
 
   return (
     <div className='bg-blue-400 h-[100svh] flex items-center justify-center form-bg'>
+      <Image
+        src={yuntlogo}
+        alt='yunt logo'
+        className='absolute top-5 w-[70%] max-w-[850px]'
+      />
       <div
         className={`flex flex-col items-center w-[90%] md:w-auto ${
           !isLogin ? 'order-2' : 'order-0'
         }`}
       >
-        <div
-          className='block
-       md:hidden absolute top-10 w-[85%]'
-        >
-          <Image src={yuntlogo} alt='yunt logo' />
-        </div>
         <div className='px-5 py-10 bg-white flex flex-col items-center gap-3 md:w-[425px] h-[451px] rounded-2xl w-full  md:rounded-none md'>
           <h2 className='text-[40px] self-baseline'>
             {isLogin ? 'Login' : 'Register'}
@@ -131,7 +130,7 @@ const AuthForm: React.FC<AuthFormProps> = ({ isLogin }) => {
             className='w-[425px] h-[451px]'
           />
         </div>
-        <div className='absolute top-[40%] w-[365px] flex flex-col text-white ml-[60px]'>
+        <div className='absolute top-[40%] w-[280px] flex flex-col text-white ml-[60px]'>
           <span className='text-[40px]'>Manage your projects,</span>{' '}
           <span className=''>with no effort.</span>
         </div>
