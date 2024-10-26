@@ -13,7 +13,10 @@ export default function Home() {
   const user = useSelector((state: RootState) => state.auth.user) as {
     name: string;
     surname: string;
+    role: string;
+    createdAt: Date;
   } | null;
+  console.log(user);
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
@@ -45,10 +48,12 @@ export default function Home() {
   return (
     <div>
       <header>
-        <h1>
-          Welcome, {user?.name} {user?.surname}
-        </h1>
-        <p>Here is my home page</p>
+        <h1>Welcome,</h1>
+        <p>
+          Here is {user?.name} {user?.surname}'s home page
+        </p>
+        <p>You are {user?.role}</p>
+        <p>You created this account at {user?.createdAt?.toLocaleString()}</p>
       </header>
       <button
         onClick={() => {

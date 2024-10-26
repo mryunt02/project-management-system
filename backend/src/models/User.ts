@@ -5,6 +5,8 @@ interface IUser extends Document {
   password: string;
   name: string;
   surname: string;
+  role: string;
+  createdAt: Date;
 }
 
 const userSchema: Schema = new Schema({
@@ -12,6 +14,8 @@ const userSchema: Schema = new Schema({
   password: { type: String, required: true },
   name: { type: String, required: true },
   surname: { type: String, required: true },
+  role: { type: String, default: 'admin' },
+  createdAt: { type: Date, default: Date.now },
 });
 
 export default mongoose.model<IUser>('User', userSchema);
