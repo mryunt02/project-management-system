@@ -34,6 +34,13 @@ export default function Home() {
       }
     }
   }, [router]);
+  const formattedDate = user?.createdAt
+    ? new Date(user.createdAt).toLocaleDateString('en-GB', {
+        day: '2-digit',
+        month: 'long',
+        year: 'numeric',
+      })
+    : '';
 
   const handleLogout = () => {
     localStorage.removeItem('token'); // Remove the token from localStorage
@@ -53,7 +60,7 @@ export default function Home() {
           Here is {user?.name} {user?.surname}'s home page
         </p>
         <p>You are {user?.role}</p>
-        <p>You created this account at {user?.createdAt?.toLocaleString()}</p>
+        <p>You created this account at: {formattedDate}</p>
       </header>
       <button
         onClick={() => {
