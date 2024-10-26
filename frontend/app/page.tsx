@@ -16,7 +16,6 @@ export default function Home() {
     role: string;
     createdAt: Date;
   } | null;
-  console.log(user);
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
@@ -57,7 +56,7 @@ export default function Home() {
       <header>
         <h1>Welcome,</h1>
         <p>
-          Here is {user?.name} {user?.surname}'s home page
+          Here is {user?.name} {user?.surname}&apos;s home page
         </p>
         <p>You are {user?.role}</p>
         <p>You created this account at: {formattedDate}</p>
