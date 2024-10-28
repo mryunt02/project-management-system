@@ -55,7 +55,6 @@ const useAuthForm = ({ isLogin }: UseAuthFormProps) => {
       });
       const { user, token } = response.data;
       dispatch(login({ user, token }));
-      console.log('usersss', user);
       if (typeof window !== 'undefined') {
         localStorage.setItem('token', response.data.token);
         localStorage.setItem('user', JSON.stringify(user));

@@ -20,7 +20,6 @@ export default function Home() {
     if (typeof window !== 'undefined') {
       const token = localStorage.getItem('token');
       const storedUser = localStorage.getItem('user');
-      console.log('stored', storedUser);
 
       if (!token) {
         router.push('/login'); // Redirect to the login page if no token is found

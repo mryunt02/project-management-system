@@ -35,13 +35,10 @@ const Header = () => {
     localStorage.removeItem('user');
     router.push('/login');
   };
-  if (typeof window !== 'undefined') {
-    const token = localStorage.getItem('token');
-    if (!token) {
-      return null;
-    }
+  const token = localStorage.getItem('token');
+  if (!token) {
+    return null;
   }
-
   return (
     <header className='flex justify-between px-5 py-2 border-b border-blue-300 items-center'>
       <Link href='/'>
