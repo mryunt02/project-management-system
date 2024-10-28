@@ -1,5 +1,7 @@
+import { useEffect, useState } from 'react';
 import Providers from '@/components/Providers';
 import './globals.css';
+import Header from '@/components/project-header';
 
 export const metadata = {
   title: 'Project Management System',
@@ -15,7 +17,10 @@ export default function RootLayout({
   return (
     <html lang='tr'>
       <body>
-        <Providers>{children}</Providers>
+        <Providers>
+          <Header />
+          {children}
+        </Providers>
       </body>
     </html>
   );

@@ -16,11 +16,11 @@ export default function Home() {
     role: string;
     createdAt: Date;
   } | null;
-
   useEffect(() => {
     if (typeof window !== 'undefined') {
       const token = localStorage.getItem('token');
       const storedUser = localStorage.getItem('user');
+      console.log('stored', storedUser);
 
       if (!token) {
         router.push('/login'); // Redirect to the login page if no token is found
@@ -33,19 +33,6 @@ export default function Home() {
       }
     }
   }, [router]);
-  const formattedDate = user?.createdAt
-    ? new Date(user.createdAt).toLocaleDateString('en-GB', {
-        day: '2-digit',
-        month: 'long',
-        year: 'numeric',
-      })
-    : '';
-
-  const handleLogout = () => {
-    localStorage.removeItem('token'); // Remove the token from localStorage
-    localStorage.removeItem('user'); // Remove the user from localStorage
-    router.push('/login'); // Redirect to the login page
-  };
 
   if (!isAuthenticated) {
     return null; // Render nothing while checking authentication
@@ -53,22 +40,10 @@ export default function Home() {
 
   return (
     <div>
-      <header>
-        <h1>Welcome,</h1>
-        <p>
-          Here is {user?.name} {user?.surname}&apos;s home page
-        </p>
-        <p>You are {user?.role}</p>
-        <p>You created this account at: {formattedDate}</p>
-      </header>
-      <button
-        onClick={() => {
-          handleLogout();
-        }}
-        className='bg-slate-500 text-white px-4 py-2 rounded hover:bg-slate-400'
-      >
-        Log Out
-      </button>
+      <h1>Welcome, </h1>
+      <p>
+        Here is {user?.name} {user?.surname}&apos;s project page
+      </p>
     </div>
   );
 }
