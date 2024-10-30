@@ -37,7 +37,7 @@ const AuthForm: React.FC<AuthFormProps> = ({ isLogin }) => {
       <Image
         src={yuntlogo}
         alt='yunt logo'
-        className='absolute top-5 w-[50%] max-w-[600px]'
+        className='absolute top-5 left-10 w-[50%] max-w-[600px]'
       />
       <div
         className={`flex flex-col items-center w-[90%] md:w-auto ${

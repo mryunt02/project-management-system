@@ -3,7 +3,7 @@ import User from '../models/User';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 
-// Kayıt olma
+// Kayıt olma (Register)
 export const register = async (req: Request, res: Response): Promise<void> => {
   const { email, password, confirmPassword, name, surname } = req.body;
 
@@ -44,12 +44,13 @@ export const register = async (req: Request, res: Response): Promise<void> => {
       .status(201)
       .json({ message: 'User successfully registered', user: newUser });
   } catch (error) {
+    console.error('Error during registration:', error);
     res.status(500).json({ message: 'User registration failed' });
     return;
   }
 };
 
-// Giriş yapma
+// Giriş yapma (Login)
 export const login = async (req: Request, res: Response) => {
   const { email, password } = req.body;
 
@@ -77,6 +78,7 @@ export const login = async (req: Request, res: Response) => {
       user: { email: user.email, name: user.name, surname: user.surname },
     });
   } catch (error) {
+    console.error('Error during login:', error);
     return res.status(500).json({ message: 'Server error' });
   }
 };
