@@ -9,11 +9,31 @@ export const fetchProjects = createAsyncThunk(
     return response.data;
   }
 );
+export const createProject = createAsyncThunk(
+  'projects/createProject',
+  async (newProject: {
+    name: string;
+    type: string;
+    members: string[];
+    description: string;
+  }) => {
+    const response = await axios.post(
+      'http://localhost:5001/api/projects',
+      newProject
+    ); // Your API endpoint
+    return response.data;
+  }
+);
 
 const projectsSlice = createSlice({
   name: 'projects',
   initialState: {
-    projects: [],
+    projects: [] as Array<{
+      name: string;
+      type: string;
+      members: string[];
+      description: string;
+    }>,
     loading: false,
     error: null as string | null,
   },
@@ -28,6 +48,17 @@ const projectsSlice = createSlice({
         state.projects = action.payload;
       })
       .addCase(fetchProjects.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message ?? null;
+      })
+      .addCase(createProject.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(createProject.fulfilled, (state, action) => {
+        state.loading = false;
+        state.projects.push(action.payload);
+      })
+      .addCase(createProject.rejected, (state, action) => {
         state.loading = false;
         state.error = action.error.message ?? null;
       });
