@@ -1,7 +1,9 @@
+// src/server.ts
 import express from 'express';
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 import authRoutes from './routes/authRoutes';
+import projectRoutes from './routes/projectRoutes'; // Import project routes
 import cors from 'cors';
 
 dotenv.config();
@@ -20,6 +22,7 @@ mongoose
 
 // Rotaları kullan
 app.use('/api', authRoutes);
+app.use('/api', projectRoutes); // Use project routes
 
 const PORT = process.env.PORT || 5001;
 app.listen(PORT, () => {
