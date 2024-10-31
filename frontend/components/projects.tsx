@@ -1,23 +1,35 @@
-import React from 'react';
+'use client';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchProjects } from '@/redux/reducers/projectReducer'; // Ensure the path is correct
 import Project from './project';
-const dummyProjects = [
-  { name: 'Project 1', id: 1 },
-  { name: 'Project 2', id: 2 },
-  { name: 'Project 3', id: 3 },
-  { name: 'Project 4', id: 4 },
-  { name: 'Project 5', id: 5 },
-  { name: 'Project 6', id: 6 },
-  { name: 'Project 7', id: 7 },
-  { name: 'Project 8', id: 8 },
-  { name: 'Project 9', id: 9 },
-  { name: 'Project 10', id: 10 },
-];
+
 const Projects = () => {
+  const dispatch = useDispatch();
+  const { projects, loading, error } = useSelector(
+    (state: {
+      projects: { projects: any[]; loading: boolean; error: string | null };
+    }) => state.projects
+  );
+  console.log(projects);
+
+  useEffect(() => {
+    dispatch(fetchProjects());
+  }, [dispatch]);
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div>{error}</div>;
+  }
+
   return (
     <ul className='grid grid-cols-3 gap-5'>
-      {dummyProjects.map((project) => (
+      {projects.map((project: { id: number; name: string }) => (
         <li key={project.id}>
-          <Project key={project.id} name={project.name} />
+          <Project name={project.name} />
         </li>
       ))}
     </ul>
