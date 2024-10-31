@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { AppDispatch } from '@/redux/store'; // Adjust the path as necessary
 import { createProject } from '@/redux/reducers/projectReducer'; // Adjust the path to your projectsSlice
+import { useRouter } from 'next/navigation';
 
 const CreateProject = () => {
   const [name, setName] = useState('');
@@ -11,6 +12,7 @@ const CreateProject = () => {
   const [description, setDescription] = useState('');
 
   const dispatch = useDispatch<AppDispatch>();
+  const router = useRouter();
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -24,13 +26,16 @@ const CreateProject = () => {
     };
 
     dispatch(createProject(newProject))
-      .then(() => {
+      .then((response) => {
         // Handle success (e.g., show a success message or reset the form)
         console.log('Project created successfully');
         setName('');
         setType('');
         setMembers('');
         setDescription('');
+
+        const projectId = response.payload._id;
+        router.push(`/projects/${projectId}`);
       })
       .catch((error) => {
         // Handle error (e.g., show an error message)
