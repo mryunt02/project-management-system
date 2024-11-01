@@ -18,7 +18,7 @@ const ProjectPage = ({ params }: { params: Promise<{ id: string }> }) => {
     dispatch(fetchProjectById(id));
   }, [dispatch, id]);
 
-  if (status === 'loading') {
+  if (status === true) {
     return <div>Loading...</div>;
   }
 

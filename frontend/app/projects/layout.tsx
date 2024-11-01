@@ -3,7 +3,9 @@ import Image from 'next/image';
 import bgimg from '@/images/bgimg.png';
 import './layout.css';
 
-const ProjectLayout = ({ children }) => {
+import { ReactNode } from 'react';
+
+const ProjectLayout = ({ children }: { children: ReactNode }) => {
   return (
     <div className='relative'>
       <Image
