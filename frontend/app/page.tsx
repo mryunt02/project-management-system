@@ -42,9 +42,7 @@ export default function Home() {
 
   return (
     <div className='bg-blue-100 w-[80%] m-auto mt-5 p-5'>
-      <div>
-        <p className='text-center'>You dont have any projects yet.</p>
-      </div>
+      <div>{}</div>
       <div>
         <div className='flex items-center justify-between'>
           <h1 className='text-[24px]'>Projects</h1>

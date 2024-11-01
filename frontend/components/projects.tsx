@@ -5,6 +5,10 @@ import { fetchProjects } from '@/redux/reducers/projectReducer'; // Ensure the p
 import Project from './project';
 import Link from 'next/link';
 interface Project {
+  map(
+    arg0: (project: { _id: number; name: string }) => React.JSX.Element
+  ): React.ReactNode;
+  length: number;
   description: string;
   members: string[];
   name: string;
@@ -18,7 +22,6 @@ const Projects = () => {
       projects: { projects: Project; loading: boolean; error: string | null };
     }) => state.projects
   );
-  console.log(projects);
 
   useEffect(() => {
     dispatch(fetchProjects());
@@ -32,7 +35,7 @@ const Projects = () => {
     return <div>{error}</div>;
   }
 
-  return (
+  return projects.length > 0 ? (
     <ul className='grid grid-cols-3 gap-5'>
       {projects?.map((project: { _id: number; name: string }) => (
         <li key={project._id}>
@@ -42,6 +45,8 @@ const Projects = () => {
         </li>
       ))}
     </ul>
+  ) : (
+    <div>No projects found. Create a new one.</div>
   );
 };
 
