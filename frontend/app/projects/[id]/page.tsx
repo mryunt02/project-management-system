@@ -31,11 +31,22 @@ const ProjectPage = ({ params }: { params: Promise<{ id: string }> }) => {
   }
 
   return (
-    <div>
-      <h1>{project.name}</h1>
-      <p>Type: {project.type}</p>
-      <p>Members: {project.members.join(', ')}</p>
-      <p>Description: {project.description}</p>
+    <div className='overflow-scroll'>
+      <ul className='flex h-full'>
+        <li className='min-w-20 bg-slate-200'>Hello test</li>
+        <li className='min-w-20 bg-slate-200'>Hello test</li>
+        <li className='min-w-20 bg-slate-200'>Hello test</li>
+        <li className='min-w-20 bg-slate-200'>Hello test</li>
+        <li className='min-w-20 bg-slate-200'>Hello test</li>
+        <li className='min-w-20 bg-slate-200'>Hello test</li>
+        <li className='min-w-20 bg-slate-200'>Hello test</li>
+        <li className='min-w-20 bg-slate-200'>Hello test</li>
+        <li className='min-w-20 bg-slate-200'>Hello test</li>
+        <li className='min-w-20 bg-slate-200'>Hello test</li>
+        <li className='min-w-20 bg-slate-200'>Hello test</li>
+        <li className='min-w-20 bg-slate-200'>Hello test</li>
+        <li className='min-w-20 bg-slate-200'>Hello test</li>
+      </ul>
     </div>
   );
 };

@@ -14,7 +14,12 @@ const ProjectLayout = ({ children }: { children: ReactNode }) => {
         layout='fill'
         objectFit='cover'
       />
-      <div className='relative z-10 full-bg'>{children}</div>
+
+      <div className='relative z-10 full-bg flex'>
+        <div className='absolute z-30 w-[260px] '>qwewqeqwee211</div>
+        <div className='w-[260px] min-w-[260px] bg-blue-300 opacity-70'></div>
+        {children}
+      </div>
     </div>
   );
 };
