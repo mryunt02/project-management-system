@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { fetchProjects } from '@/redux/reducers/projectReducer'; // Ensure the path is correct
 import Project from './project';
 import Link from 'next/link';
+import { AppDispatch } from '@/redux/store';
 interface Project {
   map(
     arg0: (project: { _id: number; name: string }) => React.JSX.Element
@@ -16,7 +17,7 @@ interface Project {
   _id: string;
 }
 const Projects = () => {
-  const dispatch = useDispatch();
+  const dispatch: AppDispatch = useDispatch();
   const { projects, loading, error } = useSelector(
     (state: {
       projects: { projects: Project; loading: boolean; error: string | null };

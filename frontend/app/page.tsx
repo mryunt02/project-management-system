@@ -2,8 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { useDispatch, useSelector } from 'react-redux';
-import type { RootState } from '@/redux/store'; // Adjust the path as necessary
+import { useDispatch } from 'react-redux';
 import { login } from '@/redux/reducers/authReducer';
 import { Input } from '@/components/ui/input';
 import Projects from '@/components/projects';
@@ -13,12 +12,6 @@ export default function Home() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const router = useRouter();
   const dispatch = useDispatch();
-  const user = useSelector((state: RootState) => state.auth.user) as {
-    name: string;
-    surname: string;
-    role: string;
-    createdAt: Date;
-  } | null;
   useEffect(() => {
     if (typeof window !== 'undefined') {
       const token = localStorage.getItem('token');

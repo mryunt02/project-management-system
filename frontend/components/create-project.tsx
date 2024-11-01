@@ -4,6 +4,9 @@ import { useDispatch } from 'react-redux';
 import { AppDispatch } from '@/redux/store'; // Adjust the path as necessary
 import { createProject } from '@/redux/reducers/projectReducer'; // Adjust the path to your projectsSlice
 import { useRouter } from 'next/navigation';
+import { Button } from './ui/button';
+import { Input } from './ui/input';
+import { Textarea } from './ui/textarea';
 
 const CreateProject = () => {
   const [name, setName] = useState('');
@@ -45,7 +48,7 @@ const CreateProject = () => {
 
   return (
     <form onSubmit={handleSubmit} className='space-y-4 mt-4'>
-      <input
+      <Input
         type='text'
         placeholder='Project Name'
         value={name}
@@ -53,7 +56,7 @@ const CreateProject = () => {
         required
         className='border p-2 w-full'
       />
-      <input
+      <Input
         type='text'
         placeholder='Project Type'
         value={type}
@@ -61,7 +64,7 @@ const CreateProject = () => {
         required
         className='border p-2 w-full'
       />
-      <input
+      <Input
         type='text'
         placeholder='Members (comma-separated)'
         value={members}
@@ -69,16 +72,16 @@ const CreateProject = () => {
         required
         className='border p-2 w-full'
       />
-      <textarea
+      <Textarea
         placeholder='Description'
         value={description}
         onChange={(e) => setDescription(e.target.value)}
         required
-        className='border p-2 w-full'
+        className='border p-2 w-full bg-white'
       />
-      <button type='submit' className='bg-blue-500 text-white p-2'>
+      <Button type='submit' className='bg-blue-500 text-white p-2'>
         Create Project
-      </button>
+      </Button>
     </form>
   );
 };
