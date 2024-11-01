@@ -4,6 +4,7 @@ import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchProjectById } from '@/redux/reducers/projectReducer';
 import { RootState, AppDispatch } from '@/redux/store';
+import { FlipHorizontal2, MoreHorizontal, Plus } from 'lucide-react';
 
 const ProjectPage = ({ params }: { params: Promise<{ id: string }> }) => {
   const { id } = React.use(params);
@@ -36,9 +37,34 @@ const ProjectPage = ({ params }: { params: Promise<{ id: string }> }) => {
         {project.name}
       </h1>
       <div className='relative top-0 h-[60px] opacity-70 bg-blue-300'></div>
-      <ul className='flex h-full overflow-scroll'>
+      <ul className='flex h-[87dvh] overflow-scroll'>
         <li className='min-w-[284px] px-1.5'>
-          <div>test</div>
+          <div className='bg-[#101204] text-[#b6c2cf] py-0.5 px-1 rounded-xl mt-3 pb-2.5'>
+            <div className='flex justify-between py-1.5 px-3'>
+              <p>To Do</p>
+              <div className='flex gap-2'>
+                <button>
+                  <MoreHorizontal />
+                </button>
+                <button>
+                  <FlipHorizontal2 />
+                </button>
+              </div>
+            </div>
+            <div className='flex gap-2 flex-col'>
+              <div className='text-[14px] rounded-[8px] bg-[#22272b] mx-1 p-2'>
+                Project planning
+              </div>
+              <div className='text-[14px] rounded-[8px] bg-[#22272b] mx-1 p-2'>
+                Meeting
+              </div>
+              <div>
+                <div className='text-[14px] rounded-[8px]  mx-1 p-2 flex items-center gap-1'>
+                  <Plus width={18} height={18} /> Add Card
+                </div>
+              </div>
+            </div>
+          </div>
         </li>
         <li className='min-w-[284px] px-1.5'>Hello test</li>
         <li className='min-w-[284px] px-1.5'>Hello test</li>
