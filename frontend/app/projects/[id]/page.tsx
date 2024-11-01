@@ -32,25 +32,26 @@ const ProjectPage = ({ params }: { params: Promise<{ id: string }> }) => {
 
   return (
     <div className='overflow-scroll'>
-      <h1 className='text-[24px] text-white px-3 py-3 opacity-10'>
+      <h1 className='text-[24px] text-white px-3 py-3 absolute z-10'>
         {project.name}
       </h1>
+      <div className='relative top-0 h-[60px] opacity-70 bg-blue-300'></div>
       <ul className='flex h-full overflow-scroll'>
-        <li className='min-w-[284px] px-1.5 bg-slate-200'>
+        <li className='min-w-[284px] px-1.5'>
           <div>test</div>
         </li>
-        <li className='min-w-[284px] px-1.5 bg-slate-200'>Hello test</li>
-        <li className='min-w-[284px] px-1.5 bg-slate-200'>Hello test</li>
-        <li className='min-w-[284px] px-1.5 bg-slate-200'>Hello test</li>
-        <li className='min-w-[284px] px-1.5 bg-slate-200'>Hello test</li>
-        <li className='min-w-[284px] px-1.5 bg-slate-200'>Hello test</li>
-        <li className='min-w-[284px] px-1.5 bg-slate-200'>Hello test</li>
-        <li className='min-w-[284px] px-1.5 bg-slate-200'>Hello test</li>
-        <li className='min-w-[284px] px-1.5 bg-slate-200'>Hello test</li>
-        <li className='min-w-[284px] px-1.5 bg-slate-200'>Hello test</li>
-        <li className='min-w-[284px] px-1.5 bg-slate-200'>Hello test</li>
-        <li className='min-w-[284px] px-1.5 bg-slate-200'>Hello test</li>
-        <li className='min-w-[284px] px-1.5 bg-slate-200'>Hello test</li>
+        <li className='min-w-[284px] px-1.5'>Hello test</li>
+        <li className='min-w-[284px] px-1.5'>Hello test</li>
+        <li className='min-w-[284px] px-1.5'>Hello test</li>
+        <li className='min-w-[284px] px-1.5'>Hello test</li>
+        <li className='min-w-[284px] px-1.5'>Hello test</li>
+        <li className='min-w-[284px] px-1.5'>Hello test</li>
+        <li className='min-w-[284px] px-1.5'>Hello test</li>
+        <li className='min-w-[284px] px-1.5'>Hello test</li>
+        <li className='min-w-[284px] px-1.5'>Hello test</li>
+        <li className='min-w-[284px] px-1.5'>Hello test</li>
+        <li className='min-w-[284px] px-1.5'>Hello test</li>
+        <li className='min-w-[284px] px-1.5'>Hello test</li>
       </ul>
     </div>
   );
