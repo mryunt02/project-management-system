@@ -1,4 +1,3 @@
-import { useEffect, useState } from 'react';
 import Providers from '@/components/Providers';
 import './globals.css';
 import Header from '@/components/project-header';
