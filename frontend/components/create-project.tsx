@@ -37,7 +37,7 @@ const CreateProject = () => {
         setMembers('');
         setDescription('');
 
-        const projectId = response.payload._id;
+        const projectId = response.payload._id; // Make sure your API returns the project ID
         router.push(`/projects/${projectId}`);
       })
       .catch((error) => {
