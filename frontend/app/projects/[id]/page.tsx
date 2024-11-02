@@ -5,6 +5,8 @@ import { useSelector, useDispatch } from 'react-redux';
 import { fetchProjectById } from '@/redux/reducers/projectReducer';
 import { RootState, AppDispatch } from '@/redux/store';
 import { FlipHorizontal2, MoreHorizontal, Plus } from 'lucide-react';
+import { trefoil } from 'ldrs';
+trefoil.register();
 
 const ProjectPage = ({ params }: { params: Promise<{ id: string }> }) => {
   const { id } = React.use(params);
@@ -19,8 +21,19 @@ const ProjectPage = ({ params }: { params: Promise<{ id: string }> }) => {
     dispatch(fetchProjectById(id));
   }, [dispatch, id]);
 
-  if (status === true) {
-    return <div>Loading...</div>;
+  if (status !== true) {
+    return (
+      <div className='text-center'>
+        <l-trefoil
+          size='40'
+          stroke='4'
+          stroke-length='0.15'
+          bg-opacity='0.1'
+          speed='1.4'
+          color='black'
+        ></l-trefoil>
+      </div>
+    );
   }
 
   if (error) {
