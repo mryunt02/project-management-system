@@ -5,6 +5,8 @@ import { fetchProjects } from '@/redux/reducers/projectReducer'; // Ensure the p
 import Project from './project';
 import Link from 'next/link';
 import { AppDispatch } from '@/redux/store';
+import { trefoil } from 'ldrs';
+trefoil.register();
 interface Project {
   map(
     arg0: (project: { _id: number; name: string }) => React.JSX.Element
@@ -29,7 +31,18 @@ const Projects = () => {
   }, [dispatch]);
 
   if (loading) {
-    return <div>Loading...</div>;
+    return (
+      <div className='text-center'>
+        <l-trefoil
+          size='40'
+          stroke='4'
+          stroke-length='0.15'
+          bg-opacity='0.1'
+          speed='1.4'
+          color='black'
+        ></l-trefoil>
+      </div>
+    );
   }
 
   if (error) {
