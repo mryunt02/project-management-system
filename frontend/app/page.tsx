@@ -19,7 +19,6 @@ export default function Home() {
       <div>
         <div className='flex items-center justify-between'>
           <h1 className='text-[24px]'>Projects</h1>
-          <Input type='text' placeholder='Search projects' className='w-auto' />
         </div>
         <div className='mt-4'>
           <Projects />

@@ -1,66 +1,71 @@
 'use client';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchProjects } from '@/redux/reducers/projectReducer'; // Ensure the path is correct
 import Project from './project';
 import Link from 'next/link';
-import { AppDispatch } from '@/redux/store';
-import { trefoil } from 'ldrs';
-trefoil.register();
+import { Input } from './ui/input';
+
 interface Project {
-  map(
-    arg0: (project: { _id: number; name: string }) => React.JSX.Element
-  ): React.ReactNode;
-  length: number;
   description: string;
   members: string[];
   name: string;
   type: string;
   _id: string;
 }
+
 const Projects = () => {
-  const dispatch: AppDispatch = useDispatch();
+  const dispatch = useDispatch();
   const { projects, loading, error } = useSelector(
     (state: {
-      projects: { projects: Project; loading: boolean; error: string | null };
+      projects: { projects: Project[]; loading: boolean; error: string | null };
     }) => state.projects
   );
+  const [searchQuery, setSearchQuery] = useState('');
 
   useEffect(() => {
     dispatch(fetchProjects());
   }, [dispatch]);
 
+  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchQuery(e.target.value);
+  };
+
+  const filteredProjects = projects.filter((project) =>
+    project.name.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
   if (loading) {
-    return (
-      <div className='text-center'>
-        <l-trefoil
-          size='40'
-          stroke='4'
-          stroke-length='0.15'
-          bg-opacity='0.1'
-          speed='1.4'
-          color='black'
-        ></l-trefoil>
-      </div>
-    );
+    return <div>Loading...</div>;
   }
 
   if (error) {
     return <div>{error}</div>;
   }
 
-  return projects.length > 0 ? (
-    <ul className='grid grid-cols-3 gap-5'>
-      {projects?.map((project: { _id: number; name: string }) => (
-        <li key={project._id}>
-          <Link href={`/projects/${project._id}`}>
-            <Project name={project.name} />
-          </Link>
-        </li>
-      ))}
-    </ul>
-  ) : (
-    <div>No projects found. Create a new one.</div>
+  return (
+    <div>
+      <Input
+        type='text'
+        placeholder='Search project'
+        value={searchQuery}
+        onChange={handleSearchChange}
+        className='mb-4 p-2 border border-gray-300 rounded'
+      />
+      {filteredProjects.length > 0 ? (
+        <ul className='grid grid-cols-3 gap-5'>
+          {filteredProjects.map((project: { _id: string; name: string }) => (
+            <li key={project._id}>
+              <Link href={`/projects/${project._id}`}>
+                <Project name={project.name} />
+              </Link>
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <div>No projects found. Create a new one.</div>
+      )}
+    </div>
   );
 };
 
