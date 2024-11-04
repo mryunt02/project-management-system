@@ -21,7 +21,7 @@ const ProjectPage = ({ params }: { params: Promise<{ id: string }> }) => {
     dispatch(fetchProjectById(id));
   }, [dispatch, id]);
 
-  if (status !== true) {
+  if (status === true) {
     return (
       <div className='text-center'>
         <l-trefoil

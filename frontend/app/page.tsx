@@ -1,33 +1,13 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation';
-import { useDispatch } from 'react-redux';
-import { login } from '@/redux/reducers/authReducer';
+import React from 'react';
 import { Input } from '@/components/ui/input';
 import Projects from '@/components/projects';
 import CreateProject from '@/components/create-project';
+import useAuthenticate from '@/hooks/use-authenticate';
 
 export default function Home() {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const router = useRouter();
-  const dispatch = useDispatch();
-  useEffect(() => {
-    if (typeof window !== 'undefined') {
-      const token = localStorage.getItem('token');
-      const storedUser = localStorage.getItem('user');
-
-      if (!token) {
-        router.push('/login'); // Redirect to the login page if no token is found
-      } else {
-        setIsAuthenticated(true); // Set authentication state to true if token is found
-        if (storedUser) {
-          const user = JSON.parse(storedUser);
-          dispatch(login({ user, token }));
-        }
-      }
-    }
-  }, [router]);
+  const { isAuthenticated } = useAuthenticate();
 
   if (!isAuthenticated) {
     return null; // Render nothing while checking authentication
