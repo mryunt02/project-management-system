@@ -79,7 +79,10 @@ const CreateProject = () => {
         required
         className='border p-2 w-full bg-white'
       />
-      <Button type='submit' className='bg-blue-500 text-white p-2'>
+      <Button
+        type='submit'
+        className='bg-blue-500 text-white p-2 hover:bg-blue-400'
+      >
         Create Project
       </Button>
     </form>

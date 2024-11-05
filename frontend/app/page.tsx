@@ -1,7 +1,6 @@
 'use client';
 
 import React from 'react';
-import { Input } from '@/components/ui/input';
 import Projects from '@/components/projects';
 import CreateProject from '@/components/create-project';
 import useAuthenticate from '@/hooks/use-authenticate';
@@ -14,8 +13,7 @@ export default function Home() {
   }
 
   return (
-    <div className='bg-blue-100 w-[80%] m-auto mt-5 p-5'>
-      <div>{}</div>
+    <div className='bg-blue-100 w-[90%] sm:w-[80%] m-auto mt-5 p-5'>
       <div>
         <div className='flex items-center justify-between'>
           <h1 className='text-[24px]'>Projects</h1>

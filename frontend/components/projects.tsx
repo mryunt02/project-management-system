@@ -5,6 +5,7 @@ import { fetchProjects } from '@/redux/reducers/projectReducer'; // Ensure the p
 import Project from './project';
 import Link from 'next/link';
 import { Input } from './ui/input';
+import { AppDispatch } from '@/redux/store';
 
 interface Project {
   description: string;
@@ -15,7 +16,7 @@ interface Project {
 }
 
 const Projects = () => {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
   const { projects, loading, error } = useSelector(
     (state: {
       projects: { projects: Project[]; loading: boolean; error: string | null };
@@ -53,7 +54,7 @@ const Projects = () => {
         className='mb-4 p-2 border border-gray-300 rounded'
       />
       {filteredProjects.length > 0 ? (
-        <ul className='grid grid-cols-3 gap-5'>
+        <ul className='grid sm:grid-cols-3 gap-5'>
           {filteredProjects.map((project: { _id: string; name: string }) => (
             <li key={project._id}>
               <Link href={`/projects/${project._id}`}>
