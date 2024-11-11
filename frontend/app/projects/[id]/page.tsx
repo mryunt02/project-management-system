@@ -4,10 +4,9 @@ import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchProjectById } from '@/redux/reducers/projectReducer';
 import { RootState, AppDispatch } from '@/redux/store';
-import { FlipHorizontal2, MoreHorizontal, Plus } from 'lucide-react';
 import { trefoil } from 'ldrs';
-import ProjectList from './components/ProjectList';
-import TaskCard from './components/TaskCard';
+import ProjectList from '@/components/ProjectList';
+import TaskCard from '@/components/TaskCard';
 trefoil.register();
 
 const ProjectPage = ({ params }: { params: Promise<{ id: string }> }) => {
@@ -58,29 +57,61 @@ const ProjectPage = ({ params }: { params: Promise<{ id: string }> }) => {
       <ul className='flex gap-3 p-4 overflow-x-auto'>
         <ProjectList title='To Do'>
           <TaskCard
-            title='Design System'
-            description='Create color palette and typography'
+            title='User Authentication'
+            description='Implement JWT authentication and user sessions'
+          />
+          <TaskCard
+            title='Database Schema'
+            description='Design and implement MongoDB schemas for projects and tasks'
+          />
+          <TaskCard
+            title='API Documentation'
+            description='Create Swagger/OpenAPI documentation for all endpoints'
           />
         </ProjectList>
 
         <ProjectList title='In Progress'>
           <TaskCard
-            title='Frontend Development'
-            description='Implement dashboard UI'
+            title='Drag and Drop'
+            description='Implement drag and drop functionality for tasks between lists'
+          />
+          <TaskCard
+            title='Real-time Updates'
+            description='Add WebSocket integration for live updates'
+          />
+          <TaskCard
+            title='Error Handling'
+            description='Implement global error handling and error boundaries'
           />
         </ProjectList>
 
         <ProjectList title='In Review'>
           <TaskCard
-            title='Landing Page'
-            description='Need feedback on hero section'
+            title='Unit Tests'
+            description='Write tests for core components and utilities'
+          />
+          <TaskCard
+            title='Performance Optimization'
+            description='Optimize bundle size and implement code splitting'
+          />
+          <TaskCard
+            title='Accessibility'
+            description='Ensure WCAG 2.1 compliance across all components'
           />
         </ProjectList>
 
         <ProjectList title='Done'>
           <TaskCard
             title='Project Setup'
-            description='Initialize repository and dependencies'
+            description='Initialize repository and configure development environment'
+          />
+          <TaskCard
+            title='UI Components'
+            description='Create reusable component library with Tailwind'
+          />
+          <TaskCard
+            title='Redux Integration'
+            description='Set up Redux store and implement basic actions'
           />
         </ProjectList>
       </ul>
