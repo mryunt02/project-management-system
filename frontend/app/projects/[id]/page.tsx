@@ -45,52 +45,58 @@ const ProjectPage = ({ params }: { params: Promise<{ id: string }> }) => {
   }
 
   return (
-    <div className='overflow-scroll'>
-      <h1 className='text-[24px] text-white px-3 py-3 absolute z-10'>
-        {project.name}
-      </h1>
-      <div className='relative top-0 h-[60px] opacity-70 bg-blue-300'></div>
-      <ul className='flex h-[87dvh] overflow-scroll'>
-        <li className='min-w-[284px] px-1.5'>
-          <div className='bg-[#101204] text-[#b6c2cf] py-0.5 px-1 rounded-xl mt-3 pb-2.5'>
-            <div className='flex justify-between py-1.5 px-3'>
-              <p>To Do</p>
-              <div className='flex gap-2'>
-                <button>
-                  <MoreHorizontal />
-                </button>
-                <button>
-                  <FlipHorizontal2 />
-                </button>
-              </div>
-            </div>
-            <div className='flex gap-2 flex-col'>
-              <div className='text-[14px] rounded-[8px] bg-[#22272b] mx-1 p-2'>
-                Project planning
-              </div>
-              <div className='text-[14px] rounded-[8px] bg-[#22272b] mx-1 p-2'>
-                Meeting
-              </div>
-              <div>
-                <div className='text-[14px] rounded-[8px]  mx-1 p-2 flex items-center gap-1'>
-                  <Plus width={18} height={18} /> Add Card
+    <div className='overflow-scroll w-full'>
+      <div className='sticky top-0 z-10 bg-white/95 backdrop-blur-sm'>
+        <h1 className='text-2xl font-semibold px-4 py-3 w-full border-b'>
+          {project.name}
+        </h1>
+        <div className='h-[2px] bg-gradient-to-r from-blue-500/20 to-purple-500/20'></div>
+      </div>
+
+      <ul className='flex gap-3 p-4 overflow-x-auto'>
+        {['To Do', 'In Progress', 'In Review', 'Done'].map((list) => (
+          <li key={list} className='min-w-[320px] flex-shrink-0'>
+            <div className='bg-[#101204] rounded-xl'>
+              <div className='flex items-center justify-between py-2 px-3 border-b border-gray-700/50'>
+                <p className='font-medium text-[#b6c2cf]'>{list}</p>
+                <div className='flex gap-2 text-gray-400'>
+                  <button className='p-1 hover:bg-white/10 rounded'>
+                    <MoreHorizontal size={18} />
+                  </button>
+                  <button className='p-1 hover:bg-white/10 rounded'>
+                    <FlipHorizontal2 size={18} />
+                  </button>
                 </div>
               </div>
+
+              <div className='p-2 flex flex-col gap-2'>
+                {/* Example cards - you'll want to map through actual data */}
+                <div className='bg-[#22272b] p-3 rounded-lg shadow-sm hover:bg-[#22272b]/80 cursor-pointer'>
+                  <h3 className='text-[#b6c2cf] text-sm font-medium'>
+                    Project planning
+                  </h3>
+                  <p className='text-gray-400 text-xs mt-1'>
+                    Create initial wireframes
+                  </p>
+                </div>
+
+                <div className='bg-[#22272b] p-3 rounded-lg shadow-sm hover:bg-[#22272b]/80 cursor-pointer'>
+                  <h3 className='text-[#b6c2cf] text-sm font-medium'>
+                    Team meeting
+                  </h3>
+                  <p className='text-gray-400 text-xs mt-1'>
+                    Discuss project timeline
+                  </p>
+                </div>
+
+                <button className='flex items-center gap-1 p-2 text-gray-400 hover:text-gray-300 hover:bg-white/5 rounded-lg text-sm'>
+                  <Plus size={16} />
+                  <span>Add Card</span>
+                </button>
+              </div>
             </div>
-          </div>
-        </li>
-        <li className='min-w-[284px] px-1.5'>Hello test</li>
-        <li className='min-w-[284px] px-1.5'>Hello test</li>
-        <li className='min-w-[284px] px-1.5'>Hello test</li>
-        <li className='min-w-[284px] px-1.5'>Hello test</li>
-        <li className='min-w-[284px] px-1.5'>Hello test</li>
-        <li className='min-w-[284px] px-1.5'>Hello test</li>
-        <li className='min-w-[284px] px-1.5'>Hello test</li>
-        <li className='min-w-[284px] px-1.5'>Hello test</li>
-        <li className='min-w-[284px] px-1.5'>Hello test</li>
-        <li className='min-w-[284px] px-1.5'>Hello test</li>
-        <li className='min-w-[284px] px-1.5'>Hello test</li>
-        <li className='min-w-[284px] px-1.5'>Hello test</li>
+          </li>
+        ))}
       </ul>
     </div>
   );
