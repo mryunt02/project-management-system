@@ -47,7 +47,7 @@ const ProjectPage = ({ params }: { params: Promise<{ id: string }> }) => {
 
   return (
     <div className='overflow-scroll w-full'>
-      <ul className='flex gap-3 p-4 overflow-x-auto'>
+      <ul className='flex gap-3 h-full p-4 overflow-x-auto'>
         <ProjectList title='Backlog'>
           <TaskCard
             title='User Analytics'

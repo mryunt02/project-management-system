@@ -1,27 +1,47 @@
 'use client';
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import Projects from '@/components/projects';
 import { ProjectDialog } from '@/components/project-dialog';
 import useAuthenticate from '@/hooks/use-authenticate';
+import { useDispatch, useSelector } from 'react-redux';
+import { AppDispatch } from '@/redux/store';
+import { fetchProjects } from '@/redux/reducers/projectReducer';
 
 export default function Home() {
+  const dispatch = useDispatch<AppDispatch>();
   const { isAuthenticated } = useAuthenticate();
+  const { projects, loading, error } = useSelector(
+    (state: {
+      projects: { projects: Project[]; loading: boolean; error: string | null };
+    }) => state.projects
+  );
+
+  useEffect(() => {
+    dispatch(fetchProjects());
+  }, [dispatch]);
 
   if (!isAuthenticated) {
     return null;
   }
 
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div>Error: {error}</div>;
+  }
+
   return (
-    <div className='bg-blue-100 w-[90%] sm:w-[80%] m-auto mt-5 p-5'>
+    <div className='bg-blue-100 w-[90%] m-auto mt-5 p-5'>
       <div>
         <div className='flex items-center justify-between'>
           <h1 className='text-[24px]'>Projects</h1>
-          <ProjectDialog />
         </div>
         <div className='mt-4'>
           <Projects
-            projects={[]}
+            projects={projects}
             onAddProject={() => {
               console.log('first');
             }}
