@@ -20,7 +20,12 @@ export default function Home() {
           <ProjectDialog />
         </div>
         <div className='mt-4'>
-          <Projects />
+          <Projects
+            projects={[]}
+            onAddProject={() => {
+              console.log('first');
+            }}
+          />
         </div>
       </div>
     </div>

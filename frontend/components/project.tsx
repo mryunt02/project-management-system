@@ -1,20 +1,45 @@
 import Image from 'next/image';
 import React from 'react';
+import { Calendar, Users2, MoreHorizontal } from 'lucide-react';
 import bgimg from '@/images/bgimg.png';
 
 interface ProjectProps {
   name: string;
+  members?: number;
+  dueDate?: string;
 }
 
-const Project: React.FC<ProjectProps> = ({ name }) => {
+const Project: React.FC<ProjectProps> = ({ name, members = 0, dueDate }) => {
   return (
-    <div className='relative'>
+    <div className='group relative overflow-hidden rounded-xl transition-all duration-300 hover:shadow-lg hover:shadow-blue-500/10'>
+      <div className='absolute inset-0 bg-gradient-to-t from-black/80 via-black/50 to-transparent z-10' />
       <Image
         src={bgimg}
         alt='project image'
-        className='h-[80px] opacity-90 object-cover'
+        className='h-[120px] w-full object-cover transition-transform duration-300 group-hover:scale-105'
       />
-      <p className='absolute top-1 left-3 text-white w-[94%]'>{name}</p>
+      <div className='absolute bottom-0 left-0 right-0 p-4 z-20'>
+        <div className='flex justify-between items-center mb-2'>
+          <h3 className='text-lg font-semibold text-white'>{name}</h3>
+          <button className='p-1.5 rounded-lg hover:bg-white/10 text-gray-300'>
+            <MoreHorizontal size={18} />
+          </button>
+        </div>
+        <div className='flex items-center gap-4 text-sm text-gray-300'>
+          {members > 0 && (
+            <span className='flex items-center gap-1.5'>
+              <Users2 size={14} />
+              {members} members
+            </span>
+          )}
+          {dueDate && (
+            <span className='flex items-center gap-1.5'>
+              <Calendar size={14} />
+              {dueDate}
+            </span>
+          )}
+        </div>
+      </div>
     </div>
   );
 };

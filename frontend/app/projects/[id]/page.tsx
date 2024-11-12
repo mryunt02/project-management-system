@@ -47,71 +47,79 @@ const ProjectPage = ({ params }: { params: Promise<{ id: string }> }) => {
 
   return (
     <div className='overflow-scroll w-full'>
-      <div className='sticky top-0 z-10 bg-white/95 backdrop-blur-sm'>
-        <h1 className='text-2xl font-semibold px-4 py-3 w-full border-b'>
-          {project.name}
-        </h1>
-        <div className='h-[2px] bg-gradient-to-r from-blue-500/20 to-purple-500/20'></div>
-      </div>
-
       <ul className='flex gap-3 p-4 overflow-x-auto'>
-        <ProjectList title='To Do'>
+        <ProjectList title='Backlog'>
           <TaskCard
-            title='User Authentication'
-            description='Implement JWT authentication and user sessions'
+            title='User Analytics'
+            description='Implement tracking and analytics dashboard'
           />
           <TaskCard
-            title='Database Schema'
-            description='Design and implement MongoDB schemas for projects and tasks'
+            title='Email Templates'
+            description='Design responsive email templates for notifications'
           />
           <TaskCard
-            title='API Documentation'
-            description='Create Swagger/OpenAPI documentation for all endpoints'
+            title='Dark Mode'
+            description='Add system-wide dark mode support'
+          />
+        </ProjectList>
+
+        <ProjectList title='Planning'>
+          <TaskCard
+            title='API Integration'
+            description='Connect with third-party payment gateway'
+          />
+          <TaskCard
+            title='Mobile Layout'
+            description='Optimize responsive design for mobile devices'
+          />
+          <TaskCard
+            title='Search Feature'
+            description='Implement global search functionality'
           />
         </ProjectList>
 
         <ProjectList title='In Progress'>
           <TaskCard
-            title='Drag and Drop'
-            description='Implement drag and drop functionality for tasks between lists'
+            title='Authentication Flow'
+            description='Implement OAuth2 and social login'
           />
           <TaskCard
-            title='Real-time Updates'
-            description='Add WebSocket integration for live updates'
+            title='File Upload'
+            description='Add drag-and-drop file upload with preview'
           />
           <TaskCard
-            title='Error Handling'
-            description='Implement global error handling and error boundaries'
-          />
-        </ProjectList>
-
-        <ProjectList title='In Review'>
-          <TaskCard
-            title='Unit Tests'
-            description='Write tests for core components and utilities'
-          />
-          <TaskCard
-            title='Performance Optimization'
-            description='Optimize bundle size and implement code splitting'
-          />
-          <TaskCard
-            title='Accessibility'
-            description='Ensure WCAG 2.1 compliance across all components'
+            title='Notifications'
+            description='Create real-time notification system'
           />
         </ProjectList>
 
-        <ProjectList title='Done'>
+        <ProjectList title='QA Testing'>
           <TaskCard
-            title='Project Setup'
-            description='Initialize repository and configure development environment'
+            title='Performance Tests'
+            description='Run load testing and optimize bottlenecks'
           />
           <TaskCard
-            title='UI Components'
-            description='Create reusable component library with Tailwind'
+            title='Cross-browser Testing'
+            description='Verify compatibility across major browsers'
           />
           <TaskCard
-            title='Redux Integration'
-            description='Set up Redux store and implement basic actions'
+            title='Security Audit'
+            description='Conduct security vulnerability assessment'
+          />
+        </ProjectList>
+
+        <ProjectList title='Ready for Release'>
+          <TaskCard
+            title='Documentation'
+            description='Update API documentation and usage guides'
+          />
+          <TaskCard
+            title='Version Bump'
+            description='Update package versions and changelog'
+          />
+          <TaskCard
+            title='Deployment Scripts'
+            description='Prepare CI/CD pipeline for production'
           />
         </ProjectList>
       </ul>
