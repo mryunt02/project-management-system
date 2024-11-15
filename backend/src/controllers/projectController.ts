@@ -73,3 +73,26 @@ export const deleteProject = async (req: Request, res: Response) => {
     res.status(500).json({ error: (error as Error).message });
   }
 };
+
+// Function to add an event to a project
+export const addEventToProject = async (req: Request, res: Response) => {
+  const projectId = req.params.id;
+  const eventData = req.body; // Ensure this contains the necessary event fields
+
+  try {
+    // Find the project and push the new event into the events array
+    const project = await Project.findByIdAndUpdate(
+      projectId,
+      { $push: { events: eventData } },
+      { new: true, useFindAndModify: false }
+    );
+
+    if (!project) {
+      return res.status(404).json({ message: 'Project not found' });
+    }
+
+    res.status(201).json(project);
+  } catch (error) {
+    res.status(500).json({ message: (error as Error).message });
+  }
+};
