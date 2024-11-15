@@ -1,4 +1,5 @@
 'use client';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 import React, { useState } from 'react';
 
 const events = [
@@ -51,12 +52,32 @@ const CustomCalendar = () => {
     const days = daysInMonth(month, year);
     const firstDay = firstDayOfMonth(month, year);
 
+    // Get previous month's details
+    const prevMonth = month === 0 ? 11 : month - 1;
+    const prevMonthYear = month === 0 ? year - 1 : year;
+    const prevMonthDays = daysInMonth(prevMonth, prevMonthYear);
+
+    // Get next month's details
+    const nextMonth = month === 11 ? 0 : month + 1;
+    const nextMonthYear = month === 11 ? year + 1 : year;
+    const totalDaysDisplayed = 42; // 6 weeks (6 * 7 = 42)
+    const totalDaysInCalendar = totalDaysDisplayed - firstDay - days;
+
     const calendarDays = [];
-    for (let i = 0; i < firstDay; i++) {
+
+    // Display the last few days of the previous month
+    for (let i = firstDay - 1; i >= 0; i--) {
       calendarDays.push(
-        <div className='bg-transparent' key={`empty-${i}`}></div>
+        <div
+          className='bg-gray-600 p-4 rounded-lg relative text-gray-400'
+          key={`prev-${prevMonthDays - i}`}
+        >
+          <div>{prevMonthDays - i}</div>
+        </div>
       );
     }
+
+    // Display the days of the current month
     for (let day = 1; day <= days; day++) {
       const dateString = `${year}-${String(month + 1).padStart(
         2,
@@ -77,6 +98,19 @@ const CustomCalendar = () => {
         </div>
       );
     }
+
+    // Display the first few days of the next month
+    for (let i = 1; i <= totalDaysInCalendar; i++) {
+      calendarDays.push(
+        <div
+          className='bg-gray-600 p-4 rounded-lg relative text-gray-400'
+          key={`next-${i}`}
+        >
+          <div>{i}</div>
+        </div>
+      );
+    }
+
     return calendarDays;
   };
 
@@ -101,7 +135,7 @@ const CustomCalendar = () => {
             className='bg-gray-700 px-3 py-1 rounded mr-2'
             onClick={handlePrevMonth}
           >
-            Previous
+            <ChevronLeft />
           </button>
           <span>
             {currentMonth.toLocaleString('default', { month: 'long' })}{' '}
@@ -111,7 +145,7 @@ const CustomCalendar = () => {
             className='bg-gray-700 px-3 py-1 rounded ml-2'
             onClick={handleNextMonth}
           >
-            Next
+            <ChevronRight />
           </button>
         </div>
       </header>
