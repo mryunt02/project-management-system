@@ -17,10 +17,10 @@ import { Button } from './ui/button';
 import { Edit } from 'lucide-react';
 
 interface ListDialogProps {
-  listId: string;
+  title: string;
 }
 
-const ListDialog = ({ listId }: ListDialogProps) => {
+const ListDialog = ({ title }: ListDialogProps) => {
   const dispatch = useDispatch<AppDispatch>();
 
   // Use useSelector to get the list details and projectId from the Redux store
@@ -28,10 +28,10 @@ const ListDialog = ({ listId }: ListDialogProps) => {
     if (!state.projects.selectedProject) {
       return { list: null, projectId: null };
     }
-
     const projectId = state.projects.selectedProject._id;
+    console.log(projectId);
     const list = state.projects.selectedProject.lists.find(
-      (list) => list._id === listId
+      (list) => list.name === title
     );
 
     return { list, projectId };
@@ -53,7 +53,11 @@ const ListDialog = ({ listId }: ListDialogProps) => {
 
     if (!list || !projectId) return;
 
-    dispatch(updateListInProject({ projectId, listId: list._id, updatedList }));
+    dispatch(
+      updateListInProject({ projectId, listId: list._id, updatedList })
+    ).then(() => {
+      window.location.reload(); // Reload the page after saving changes
+    });
   };
 
   return (

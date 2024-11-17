@@ -29,7 +29,7 @@ const ProjectDropdown = ({ title }: { title: string }) => {
         <DropdownMenuContent>
           <DropdownMenuLabel>{title}</DropdownMenuLabel>
           <DropdownMenuSeparator />
-          <ListDialog />
+          <ListDialog title={title} />
           <DropdownMenuItem onClick={handleDeleteList}>
             <Delete /> Delete list
           </DropdownMenuItem>
