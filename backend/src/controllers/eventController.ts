@@ -1,78 +1,48 @@
 import { Request, Response } from 'express';
-import Event, { IEvent } from '../models/Event';
-import Project from '../models/Project';
+import Event from '../models/Event';
+import List from '../models/List';
 
-// Yeni bir event oluşturma
-export const createEvent = async (req: Request, res: Response) => {
+// Create a new event under a list
+export const createEvent = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
+  const { projectId, listId } = req.params;
+  const { title, description, deadline, attendees } = req.body;
+
   try {
-    const { title, description, date, attendees, projectId } = req.body;
+    const list = await List.findOne({ _id: listId, projectId });
+    if (!list) {
+      res.status(404).json({ message: 'List not found' });
+      return;
+    }
 
-    const newEvent: IEvent = new Event({
+    const newEvent = new Event({
       title,
       description,
-      date,
+      deadline,
       attendees,
-      projectId,
+      listId,
     });
-
     await newEvent.save();
+
+    list.events.push(newEvent._id);
+    await list.save();
+
     res.status(201).json(newEvent);
   } catch (error) {
-    res.status(400).json({ error: (error as Error).message });
+    res.status(500).json({ message: 'Failed to create event', error });
   }
 };
 
-// Belirli bir projedeki tüm event'leri getirme
-export const getEventsByProjectId = async (req: Request, res: Response) => {
-  const { projectId } = req.params;
+// Get all events under a list
+export const getEvents = async (req: Request, res: Response): Promise<void> => {
+  const { projectId, listId } = req.params;
+
   try {
-    const events = await Event.find({ projectId }).populate('projectId');
+    const events = await Event.find({ listId });
     res.status(200).json(events);
   } catch (error) {
-    res.status(500).json({ error: (error as Error).message });
-  }
-};
-
-// Event ID'sine göre event' getirme
-export const getEventById = async (req: Request, res: Response) => {
-  const { id } = req.params;
-  try {
-    const event = await Event.findById(id).populate('projectId');
-    if (!event) {
-      return res.status(404).json({ message: 'Event not found' });
-    }
-    res.status(200).json(event);
-  } catch (error) {
-    res.status(500).json({ error: (error as Error).message });
-  }
-};
-
-// Event güncelleme
-export const updateEvent = async (req: Request, res: Response) => {
-  const { id } = req.params;
-  try {
-    const updatedEvent = await Event.findByIdAndUpdate(id, req.body, {
-      new: true,
-    });
-    if (!updatedEvent) {
-      return res.status(404).json({ message: 'Event not found' });
-    }
-    res.status(200).json(updatedEvent);
-  } catch (error) {
-    res.status(400).json({ error: (error as Error).message });
-  }
-};
-
-// Event silme
-export const deleteEvent = async (req: Request, res: Response) => {
-  const { id } = req.params;
-  try {
-    const deletedEvent = await Event.findByIdAndDelete(id);
-    if (!deletedEvent) {
-      return res.status(404).json({ message: 'Event not found' });
-    }
-    res.status(200).json({ message: 'Event deleted successfully' });
-  } catch (error) {
-    res.status(500).json({ error: (error as Error).message });
+    res.status(500).json({ message: 'Failed to get events', error });
   }
 };

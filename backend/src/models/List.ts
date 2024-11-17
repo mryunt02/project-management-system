@@ -1,26 +1,19 @@
 import mongoose, { Document, Schema } from 'mongoose';
-import eventSchema, { IEvent } from './Event'; // Import the Event schema
-
-export interface IEventCategory {
-  name: string;
-  events: IEvent[];
-}
 
 export interface IList extends Document {
-  _id: mongoose.Types.ObjectId;
   name: string;
-  eventCategories: IEventCategory[]; // Array of event categories, each with a name and events
+  projectId: mongoose.Schema.Types.ObjectId;
+  events: mongoose.Schema.Types.ObjectId[];
 }
 
-export const listSchema: Schema<IList> = new Schema({
-  _id: { type: Schema.Types.ObjectId, auto: true },
+const listSchema: Schema<IList> = new Schema({
   name: { type: String, required: true },
-  eventCategories: [
-    {
-      name: { type: String, required: true }, // Name of the event category
-      events: { type: [eventSchema], default: [] }, // List of events under each category
-    },
-  ],
+  projectId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Project',
+    required: true,
+  },
+  events: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Event' }],
 });
 
 const List = mongoose.model<IList>('List', listSchema);

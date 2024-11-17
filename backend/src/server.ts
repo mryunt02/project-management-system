@@ -1,11 +1,11 @@
-// src/server.ts
 import express from 'express';
 import mongoose from 'mongoose';
-import dotenv from 'dotenv';
-import authRoutes from './routes/authRoutes';
-import projectRoutes from './routes/projectRoutes'; // Import project routes
 import cors from 'cors';
-
+import authRoutes from './routes/authRoutes';
+import projectRoutes from './routes/projectRoutes';
+import listRoutes from './routes/listRoutes';
+import eventRoutes from './routes/eventRoutes';
+import dotenv from 'dotenv';
 dotenv.config();
 
 const app = express();
@@ -23,6 +23,8 @@ mongoose
 // Rotaları kullan
 app.use('/api', authRoutes);
 app.use('/api', projectRoutes); // Use project routes
+app.use('/api', listRoutes); // Use list routes
+app.use('/api', eventRoutes); // Use event routes
 
 const PORT = process.env.PORT || 5001;
 app.listen(PORT, () => {
