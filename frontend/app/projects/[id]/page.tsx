@@ -34,7 +34,7 @@ const ProjectPage = ({ params }: ProjectPageProps) => {
     <div className='overflow-scroll w-full'>
       <ul className='flex gap-3 h-full p-4 overflow-x-auto'>
         {project.lists.map((list) => (
-          <ProjectList key={list._id} title={list.name}>
+          <ProjectList key={list._id} title={list.name} events={list.events}>
             {/* Render TaskCards here */}
           </ProjectList>
         ))}

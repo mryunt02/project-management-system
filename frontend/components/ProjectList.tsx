@@ -1,12 +1,13 @@
 import { FlipHorizontal2, MoreHorizontal, Plus } from 'lucide-react';
-import { ReactNode } from 'react';
+import TaskCard from './TaskCard';
 
 interface ProjectListProps {
+  key: string;
   title: string;
-  children?: ReactNode;
+  events: { _id: string; title: string; description: string }[];
 }
 
-const ProjectList = ({ title, children }: ProjectListProps) => {
+const ProjectList = ({ title, events }: ProjectListProps) => {
   return (
     <li className='flex-shrink-0'>
       <div className='bg-[#101204] rounded-xl w-[272px]'>
@@ -23,7 +24,13 @@ const ProjectList = ({ title, children }: ProjectListProps) => {
         </div>
 
         <div className='p-2 flex flex-col gap-2'>
-          {children}
+          {events.map((task, index) => (
+            <TaskCard
+              key={index}
+              title={task.title}
+              description={task.description}
+            />
+          ))}
 
           <button className='flex items-center gap-1 p-2 text-gray-400 hover:text-gray-300 hover:bg-white/5 rounded-lg text-sm'>
             <Plus size={16} />
