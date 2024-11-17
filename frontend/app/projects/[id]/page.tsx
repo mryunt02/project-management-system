@@ -23,11 +23,7 @@ const ProjectPage = ({ params }: ProjectPageProps) => {
   }, [dispatch, id]);
 
   if (!project) {
-    return (
-      <div>
-        <AddListDialog projectId={id} />
-      </div>
-    );
+    return <div>Loading...</div>;
   }
 
   return (

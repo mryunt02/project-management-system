@@ -15,30 +15,29 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from './ui/textarea';
 import { Button } from '@/components/ui/button';
 import TaskCard from './TaskCard'; // Ensure TaskCard is imported
-import { RootState } from '@/redux/store';
+import { AppDispatch, RootState } from '@/redux/store';
 import { AttendeesTable } from './attendee-table';
 
-export function EventDialog({ eventId }) {
-  const dispatch = useDispatch();
+export function EventDialog({ eventId }: { eventId: string }) {
+  const dispatch = useDispatch<AppDispatch>();
 
   // Use useSelector to get the event details from the Redux store
-  const event = useSelector((state: RootState) => {
+  const { event, listId, projectId } = useSelector((state: RootState) => {
     // Log the entire lists structure for debugging
-    console.log(state.projects.selectedProject.lists);
+    if (!state.projects.selectedProject) {
+      return { event: null, listId: null, projectId: null };
+    }
 
     // Find the event in the lists
+    const projectId = state.projects.selectedProject._id;
     for (const list of state.projects.selectedProject.lists) {
-      console.log(`Checking list: ${list._id}`); // Log the current list ID
       const foundEvent = list.events.find((event) => event._id === eventId);
       if (foundEvent) {
-        console.log(`Found event: ${foundEvent}`); // Log the found event
-        return foundEvent; // Return the found event
+        return { event: foundEvent, listId: list._id, projectId }; // Return the found event
       }
     }
-    console.log('No event found'); // Log if no event is found
-    return null; // Return null if no event is found
+    return { event: null, listId: null }; // Return null if no event is found
   });
-  console.log(event.attendees);
 
   // Initialize state with default values
   const [title, setTitle] = useState(event?.title);
@@ -53,24 +52,25 @@ export function EventDialog({ eventId }) {
       setAttendees(event.attendees.join(', '));
     }
   }, [event]);
-
+  console.log(projectId);
   const handleUpdateEvent = () => {
     const updatedEvent = {
-      title,
+      title: title || '',
       description,
       attendees: attendees.split(', ').map((attendee) => attendee.trim()),
     };
 
+    if (!event) return;
+
     dispatch(
       updateEventInList({ projectId, listId, eventId: event._id, updatedEvent })
     );
-    onClose(); // Close the dialog after updating
   };
   return (
     <Dialog>
       <DialogTrigger asChild>
         <Button className='h-auto p-0'>
-          <TaskCard title={title} description={description} />
+          <TaskCard title={title || ''} description={description || ''} />
         </Button>
       </DialogTrigger>
       <DialogContent className='sm:max-w-[425px]'>
@@ -99,7 +99,7 @@ export function EventDialog({ eventId }) {
               placeholder='Event Description'
             />
           </div>
-          <AttendeesTable attendees={event.attendees} />
+          {event && <AttendeesTable attendees={event.attendees} />}
         </div>
         <DialogFooter>
           <DialogClose>

@@ -105,7 +105,12 @@ const projectsSlice = createSlice({
       lists: Array<{
         _id: string;
         name: string;
-        events: Array<{ _id: string; title: string; description: string }>;
+        events: Array<{
+          attendees: string[];
+          _id: string;
+          title: string;
+          description: string;
+        }>;
       }>;
     } | null,
     loading: false,

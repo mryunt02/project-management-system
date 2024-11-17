@@ -9,9 +9,12 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
+interface Attendee {
+  role: string;
+}
 
-export function AttendeesTable({ attendees }) {
-  console.log(attendees[0]);
+export function AttendeesTable({ attendees }: { attendees: Attendee[] }) {
+  console.log(attendees);
   return (
     <Table>
       <TableCaption>A list of event attendees.</TableCaption>

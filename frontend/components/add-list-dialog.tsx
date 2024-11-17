@@ -14,10 +14,15 @@ import { Button } from '@/components/ui/button';
 import { Plus } from 'lucide-react';
 import { useDispatch } from 'react-redux';
 import { addListToProject } from '@/redux/reducers/projectReducer'; // Adjust the import path as necessary
+import { AppDispatch } from '@/redux/store';
 
-const AddListDialog = ({ projectId }) => {
+interface AddListDialogProps {
+  projectId: string;
+}
+
+const AddListDialog: React.FC<AddListDialogProps> = ({ projectId }) => {
   const [listName, setListName] = useState('');
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
 
   const handleAddList = () => {
     if (!listName.trim()) {

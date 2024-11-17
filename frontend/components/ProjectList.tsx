@@ -1,5 +1,4 @@
 import { FlipHorizontal2, MoreHorizontal, Plus } from 'lucide-react';
-import TaskCard from './TaskCard';
 import { EventDialog } from './event-dialog';
 
 interface ProjectListProps {
