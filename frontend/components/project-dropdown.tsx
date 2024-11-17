@@ -8,24 +8,34 @@ import {
   DropdownMenuTrigger,
 } from './ui/dropdown-menu';
 import { Delete, Edit, MoreHorizontal } from 'lucide-react';
+import { useDispatch } from 'react-redux';
+import { AppDispatch } from '@/redux/store';
+import { updateListInProject } from '@/redux/reducers/projectReducer';
+import { Dialog, DialogHeader, DialogTrigger } from './ui/dialog';
+import { DialogContent, DialogDescription } from '@radix-ui/react-dialog';
+import { Input } from './ui/input';
+import ListDialog from './list-dialog';
 
-const ProjectDropdown = () => {
+const ProjectDropdown = ({ title }: { title: string }) => {
+  const handleDeleteList = () => {
+    console.log('Delete list');
+  };
   return (
-    <DropdownMenu>
-      <DropdownMenuTrigger className=' p-1 hover:bg-white/10 rounded'>
-        <MoreHorizontal size={18} />
-      </DropdownMenuTrigger>
-      <DropdownMenuContent>
-        <DropdownMenuLabel>TO DO</DropdownMenuLabel>
-        <DropdownMenuSeparator />
-        <DropdownMenuItem>
-          <Edit /> Edit list
-        </DropdownMenuItem>
-        <DropdownMenuItem>
-          <Delete /> Delete list
-        </DropdownMenuItem>
-      </DropdownMenuContent>
-    </DropdownMenu>
+    <>
+      <DropdownMenu>
+        <DropdownMenuTrigger className=' p-1 hover:bg-white/10 rounded'>
+          <MoreHorizontal size={18} />
+        </DropdownMenuTrigger>
+        <DropdownMenuContent>
+          <DropdownMenuLabel>{title}</DropdownMenuLabel>
+          <DropdownMenuSeparator />
+          <ListDialog />
+          <DropdownMenuItem onClick={handleDeleteList}>
+            <Delete /> Delete list
+          </DropdownMenuItem>
+        </DropdownMenuContent>
+      </DropdownMenu>
+    </>
   );
 };
 

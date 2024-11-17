@@ -52,7 +52,6 @@ export function EventDialog({ eventId }: { eventId: string }) {
       setAttendees(event.attendees.join(', '));
     }
   }, [event]);
-  console.log(projectId);
   const handleUpdateEvent = () => {
     const updatedEvent = {
       title: title || '',

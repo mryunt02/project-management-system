@@ -15,7 +15,7 @@ const ProjectList = ({ title, events }: ProjectListProps) => {
         <div className='flex items-center justify-between py-2 px-3 border-b border-gray-700/50'>
           <p className='font-medium text-[#b6c2cf]'>{title}</p>
           <div className='flex gap-2 text-gray-400'>
-            <ProjectDropdown />
+            <ProjectDropdown title={title} />
             <button className='p-1 hover:bg-white/10 rounded'>
               <FlipHorizontal2 size={18} />
             </button>

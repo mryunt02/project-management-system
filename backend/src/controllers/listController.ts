@@ -60,3 +60,23 @@ export const getListById = async (
     res.status(500).json({ message: 'Failed to get list', error });
   }
 };
+
+export const updateList = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
+  const { listId } = req.params;
+  const { name } = req.body;
+
+  try {
+    const list = await List.findByIdAndUpdate(listId, { name }, { new: true });
+    if (!list) {
+      res.status(404).json({ message: 'List not found' });
+      return;
+    }
+
+    res.status(200).json(list);
+  } catch (error) {
+    res.status(500).json({ message: 'Failed to update list', error });
+  }
+};
