@@ -1,5 +1,6 @@
 import { FlipHorizontal2, MoreHorizontal, Plus } from 'lucide-react';
 import TaskCard from './TaskCard';
+import { EventDialog } from './event-dialog';
 
 interface ProjectListProps {
   key: string;
@@ -25,11 +26,7 @@ const ProjectList = ({ title, events }: ProjectListProps) => {
 
         <div className='p-2 flex flex-col gap-2'>
           {events.map((task, index) => (
-            <TaskCard
-              key={index}
-              title={task.title}
-              description={task.description}
-            />
+            <EventDialog key={index} eventId={task._id} />
           ))}
 
           <button className='flex items-center gap-1 p-2 text-gray-400 hover:text-gray-300 hover:bg-white/5 rounded-lg text-sm'>

@@ -56,6 +56,31 @@ export const addListToProject = createAsyncThunk(
   }
 );
 
+export const updateEventInList = createAsyncThunk(
+  'projects/updateEventInList',
+  async ({
+    projectId,
+    listId,
+    eventId,
+    updatedEvent,
+  }: {
+    projectId: string;
+    listId: string;
+    eventId: string;
+    updatedEvent: {
+      title: string;
+      description: string;
+      attendees: string[];
+    };
+  }) => {
+    const response = await axios.put(
+      `http://localhost:5001/api/projects/${projectId}/lists/${listId}/events/${eventId}`,
+      updatedEvent
+    ); // Your API endpoint
+    return response.data;
+  }
+);
+
 const projectsSlice = createSlice({
   name: 'projects',
   initialState: {
@@ -132,6 +157,27 @@ const projectsSlice = createSlice({
         }
       })
       .addCase(addListToProject.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message ?? null;
+      })
+      .addCase(updateEventInList.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(updateEventInList.fulfilled, (state, action) => {
+        state.loading = false;
+        const { projectId, listId, eventId } = action.meta.arg;
+        const project = state.projects.find((p) => p._id === projectId);
+        if (project) {
+          const list = project.lists.find((l) => l._id === listId);
+          if (list) {
+            const eventIndex = list.events.findIndex((e) => e._id === eventId);
+            if (eventIndex !== -1) {
+              list.events[eventIndex] = action.payload; // Update the event
+            }
+          }
+        }
+      })
+      .addCase(updateEventInList.rejected, (state, action) => {
         state.loading = false;
         state.error = action.error.message ?? null;
       });
