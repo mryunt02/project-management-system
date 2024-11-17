@@ -9,7 +9,7 @@ interface ProjectListProps {
 const ProjectList = ({ title, children }: ProjectListProps) => {
   return (
     <li className='flex-shrink-0'>
-      <div className='bg-[#101204] rounded-xl max-w-[272px]'>
+      <div className='bg-[#101204] rounded-xl w-[272px]'>
         <div className='flex items-center justify-between py-2 px-3 border-b border-gray-700/50'>
           <p className='font-medium text-[#b6c2cf]'>{title}</p>
           <div className='flex gap-2 text-gray-400'>

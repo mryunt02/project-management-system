@@ -7,6 +7,7 @@ import { RootState, AppDispatch } from '@/redux/store';
 import { trefoil } from 'ldrs';
 import ProjectList from '@/components/ProjectList';
 import TaskCard from '@/components/TaskCard';
+import { Plus } from 'lucide-react';
 trefoil.register();
 
 const ProjectPage = ({ params }: { params: Promise<{ id: string }> }) => {
@@ -122,6 +123,18 @@ const ProjectPage = ({ params }: { params: Promise<{ id: string }> }) => {
             description='Prepare CI/CD pipeline for production'
           />
         </ProjectList>
+        <ProjectList title='Completed'>
+          <TaskCard
+            title='Launch Party'
+            description='Celebrate the successful project launch'
+          />
+        </ProjectList>
+        <div className='min-w-[272px]'>
+          <button className='flex items-center gap-1 p-3 text-white bg-[#ffffff3d]  hover:bg-[#ffffff2e] rounded-lg text-sm w-full h-[42px]'>
+            <Plus />
+            <span>Add New List</span>
+          </button>
+        </div>
       </ul>
     </div>
   );
