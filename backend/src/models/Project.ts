@@ -1,11 +1,12 @@
 import mongoose, { Document, Schema } from 'mongoose';
+import { IList } from './List';
 
 export interface IProject extends Document {
   name: string;
   type: string;
   members: string[];
   description: string;
-  lists: mongoose.Schema.Types.ObjectId[];
+  lists: IList[]; // Adjusted for populated lists
 }
 
 const projectSchema: Schema<IProject> = new Schema({

@@ -1,6 +1,7 @@
 // src/controllers/projectController.ts
 import { Request, Response } from 'express';
 import Project, { IProject } from '../models/Project';
+import List from '../models/List';
 
 // Create a new project
 export const createProject = async (req: Request, res: Response) => {
@@ -34,10 +35,19 @@ export const getProjects = async (req: Request, res: Response) => {
 export const getProjectById = async (req: Request, res: Response) => {
   const { id } = req.params;
   try {
-    const project = await Project.findById(id);
+    const project = await Project.findById(id).populate({
+      path: 'lists',
+      select: 'name events', // Select only name and events from lists
+      populate: {
+        path: 'events', // Assuming events is a reference to the Event model
+        select: 'title description deadline attendees', // Select the fields you want from events
+      },
+    });
+
     if (!project) {
       return res.status(404).json({ message: 'Project not found' });
     }
+
     res.status(200).json(project);
   } catch (error) {
     res.status(500).json({ error: (error as Error).message });
