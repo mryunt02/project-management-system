@@ -35,6 +35,27 @@ export const createProject = createAsyncThunk(
   }
 );
 
+export const addListToProject = createAsyncThunk(
+  'projects/addListToProject',
+  async ({
+    projectId,
+    newList,
+  }: {
+    projectId: string;
+    newList: {
+      _id: string;
+      name: string;
+      events: Array<{ _id: string; title: string; description: string }>;
+    };
+  }) => {
+    const response = await axios.post(
+      `http://localhost:5001/api/projects/${projectId}/lists`,
+      newList
+    ); // Your API endpoint
+    return response.data;
+  }
+);
+
 const projectsSlice = createSlice({
   name: 'projects',
   initialState: {
@@ -44,6 +65,11 @@ const projectsSlice = createSlice({
       type: string;
       members: string[];
       description: string;
+      lists: Array<{
+        _id: string;
+        name: string;
+        events: Array<{ _id: string; title: string; description: string }>;
+      }>;
     }>,
     selectedProject: null as {
       _id: string;
@@ -51,6 +77,11 @@ const projectsSlice = createSlice({
       type: string;
       members: string[];
       description: string;
+      lists: Array<{
+        _id: string;
+        name: string;
+        events: Array<{ _id: string; title: string; description: string }>;
+      }>;
     } | null,
     loading: false,
     error: null as string | null,
@@ -88,6 +119,19 @@ const projectsSlice = createSlice({
         state.projects.push(action.payload);
       })
       .addCase(createProject.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message ?? null;
+      })
+      .addCase(addListToProject.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(addListToProject.fulfilled, (state, action) => {
+        state.loading = false;
+        if (state.selectedProject) {
+          state.selectedProject.lists.push(action.payload);
+        }
+      })
+      .addCase(addListToProject.rejected, (state, action) => {
         state.loading = false;
         state.error = action.error.message ?? null;
       });
