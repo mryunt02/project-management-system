@@ -5,7 +5,8 @@ export interface IEvent extends Document {
   description: string;
   date: Date;
   attendees: string[];
-  projectId: mongoose.Schema.Types.ObjectId; // Projeye bağlanacak alan
+  projectId: mongoose.Schema.Types.ObjectId; // Reference to the project
+  listId: mongoose.Schema.Types.ObjectId; // Reference to the list
 }
 
 const eventSchema: Schema<IEvent> = new Schema({
@@ -17,7 +18,12 @@ const eventSchema: Schema<IEvent> = new Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Project',
     required: true,
-  }, // projectId ile bağlantı
+  }, // Reference to the project
+  listId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'List', // Reference to the List model
+    required: true,
+  }, // Reference to the list
 });
 
 const Event = mongoose.model<IEvent>('Event', eventSchema);
