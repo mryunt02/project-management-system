@@ -1,6 +1,9 @@
 import { FlipHorizontal2, MoreHorizontal, Plus } from 'lucide-react';
 import { EventDialog } from './event-dialog';
 import ProjectDropdown from './project-dropdown';
+import AddEventDialog from './add-event-dialog';
+import { useSelector } from 'react-redux';
+import { RootState } from '@/redux/store';
 
 interface ProjectListProps {
   key: string;
@@ -24,6 +27,17 @@ const ProjectList = ({ title, events, color }: ProjectListProps) => {
         return 'bg-[#101204]'; // Default color if none match
     }
   };
+  const { projectId, listId } = useSelector((state: RootState) => {
+    if (!state.projects.selectedProject) {
+      return { projectId: null, listId: null };
+    }
+    const projectId = state.projects.selectedProject._id;
+    const listId = state.projects.selectedProject.lists.find(
+      (list) => list.name === title
+    )?._id;
+    return { projectId, listId };
+  });
+  console.log(projectId, listId);
   return (
     <li className='flex-shrink-0'>
       <div className='rounded-xl w-[272px] bg-[#101204]'>
@@ -46,10 +60,7 @@ const ProjectList = ({ title, events, color }: ProjectListProps) => {
             <EventDialog key={index} eventId={task._id} />
           ))}
 
-          <button className='flex items-center gap-1 p-2 text-gray-400 hover:text-gray-300 hover:bg-white/5 rounded-lg text-sm'>
-            <Plus size={16} />
-            <span>Add Card</span>
-          </button>
+          <AddEventDialog projectId={projectId} listId={listId} />
         </div>
       </div>
     </li>
