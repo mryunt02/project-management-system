@@ -114,6 +114,29 @@ export const deleteListFromProject = createAsyncThunk(
   }
 );
 
+export const createEventInList = createAsyncThunk(
+  'projects/createEventInList',
+  async ({
+    projectId,
+    listId,
+    newEvent,
+  }: {
+    projectId: string;
+    listId: string;
+    newEvent: {
+      title: string;
+      description: string;
+      attendees: string[];
+    };
+  }) => {
+    const response = await axios.post(
+      `http://localhost:5001/api/projects/${projectId}/lists/${listId}/events`,
+      newEvent
+    ); // Your API endpoint
+    return response.data;
+  }
+);
+
 const projectsSlice = createSlice({
   name: 'projects',
   initialState: {
@@ -252,6 +275,24 @@ const projectsSlice = createSlice({
         }
       })
       .addCase(deleteListFromProject.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message ?? null;
+      })
+      .addCase(createEventInList.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(createEventInList.fulfilled, (state, action) => {
+        state.loading = false;
+        const { projectId, listId } = action.meta.arg;
+        const project = state.projects.find((p) => p._id === projectId);
+        if (project) {
+          const list = project.lists.find((l) => l._id === listId);
+          if (list) {
+            list.events.push(action.payload); // Add the new event to the list
+          }
+        }
+      })
+      .addCase(createEventInList.rejected, (state, action) => {
         state.loading = false;
         state.error = action.error.message ?? null;
       });
