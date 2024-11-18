@@ -82,7 +82,7 @@ const Header = () => {
           onClick={togglePopover}
         />
         {isPopoverOpen && (
-          <div className='absolute right-0 mt-2 w-48 bg-white border border-gray-300 rounded shadow-lg'>
+          <div className='absolute right-0 mt-2 w-48 bg-white border border-gray-300 rounded shadow-lg z-20'>
             <ul>
               <li
                 className='px-4 py-2 hover:bg-gray-100'
