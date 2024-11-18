@@ -4,6 +4,7 @@ export interface IList extends Document {
   name: string;
   projectId: mongoose.Schema.Types.ObjectId;
   events: mongoose.Schema.Types.ObjectId[];
+  color: string;
 }
 
 const listSchema: Schema<IList> = new Schema({
@@ -14,6 +15,7 @@ const listSchema: Schema<IList> = new Schema({
     required: true,
   },
   events: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Event' }],
+  color: { type: String, default: '#101204' },
 });
 
 const List = mongoose.model<IList>('List', listSchema);

@@ -8,7 +8,7 @@ export const createList = async (
   res: Response
 ): Promise<void> => {
   const { projectId } = req.params;
-  const { name } = req.body;
+  const { name, color } = req.body;
 
   try {
     const project = await Project.findById(projectId);
@@ -17,7 +17,7 @@ export const createList = async (
       return;
     }
 
-    const newList = new List({ name, projectId });
+    const newList = new List({ name, color, projectId });
     await newList.save();
 
     project.lists.push(newList._id);
@@ -65,11 +65,16 @@ export const updateList = async (
   req: Request,
   res: Response
 ): Promise<void> => {
-  const { listId } = req.params;
-  const { name } = req.body;
+  const { projectId, listId } = req.params;
+  const { name, color } = req.body;
 
   try {
-    const list = await List.findByIdAndUpdate(listId, { name }, { new: true });
+    const list = await List.findOneAndUpdate(
+      { _id: listId, projectId },
+      { name, color },
+      { new: true }
+    );
+
     if (!list) {
       res.status(404).json({ message: 'List not found' });
       return;

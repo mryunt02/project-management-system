@@ -5,14 +5,33 @@ import ProjectDropdown from './project-dropdown';
 interface ProjectListProps {
   key: string;
   title: string;
+  color: string;
   events: { _id: string; title: string; description: string }[];
 }
 
-const ProjectList = ({ title, events }: ProjectListProps) => {
+const ProjectList = ({ title, events, color }: ProjectListProps) => {
+  const getColorClass = (color: string): string => {
+    switch (color) {
+      case 'green':
+        return 'bg-green-500';
+      case 'red':
+        return 'bg-red-500';
+      case 'yellow':
+        return 'bg-yellow-500';
+      case 'blue':
+        return 'bg-blue-500';
+      default:
+        return 'bg-[#101204]'; // Default color if none match
+    }
+  };
   return (
     <li className='flex-shrink-0'>
-      <div className='bg-[#101204] rounded-xl w-[272px]'>
-        <div className='flex items-center justify-between py-2 px-3 border-b border-gray-700/50'>
+      <div className='rounded-xl w-[272px] bg-[#101204]'>
+        <div
+          className={`flex items-center justify-between py-2 px-3 border-b border-gray-700/50 ${getColorClass(
+            color
+          )} rounded-t-xl`}
+        >
           <p className='font-medium text-[#b6c2cf]'>{title}</p>
           <div className='flex gap-2 text-gray-400'>
             <ProjectDropdown title={title} />

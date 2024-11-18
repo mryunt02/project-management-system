@@ -45,6 +45,7 @@ export const addListToProject = createAsyncThunk(
     newList: {
       _id: string;
       name: string;
+      color: string;
       events: Array<{ _id: string; title: string; description: string }>;
     };
   }) => {
@@ -55,6 +56,7 @@ export const addListToProject = createAsyncThunk(
     return response.data;
   }
 );
+
 export const updateListInProject = createAsyncThunk(
   'projects/updateListInProject',
   async ({
@@ -66,6 +68,7 @@ export const updateListInProject = createAsyncThunk(
     listId: string;
     updatedList: {
       name: string;
+      color: string;
     };
   }) => {
     const response = await axios.put(
@@ -113,6 +116,7 @@ const projectsSlice = createSlice({
       lists: Array<{
         _id: string;
         name: string;
+        color: string;
         events: Array<{ _id: string; title: string; description: string }>;
       }>;
     }>,
@@ -125,6 +129,7 @@ const projectsSlice = createSlice({
       lists: Array<{
         _id: string;
         name: string;
+        color: string;
         events: Array<{
           attendees: string[];
           _id: string;
@@ -217,6 +222,7 @@ const projectsSlice = createSlice({
           const list = project.lists.find((l) => l._id === listId);
           if (list) {
             list.name = action.payload.name; // Update the list name
+            list.color = action.payload.color; // Update the list color
           }
         }
       })

@@ -29,7 +29,6 @@ const ListDialog = ({ title }: ListDialogProps) => {
       return { list: null, projectId: null };
     }
     const projectId = state.projects.selectedProject._id;
-    console.log(projectId);
     const list = state.projects.selectedProject.lists.find(
       (list) => list.name === title
     );
@@ -39,16 +38,19 @@ const ListDialog = ({ title }: ListDialogProps) => {
 
   // Initialize state with default values
   const [listTitle, setListTitle] = useState(list?.name || '');
+  const [listColor, setListColor] = useState(list?.color || 'green');
 
   useEffect(() => {
     if (list) {
       setListTitle(list.name);
+      setListColor(list.color || 'green');
     }
   }, [list]);
 
   const handleUpdateList = () => {
     const updatedList = {
       name: listTitle || '',
+      color: listColor || '',
     };
 
     if (!list || !projectId) return;
@@ -81,6 +83,51 @@ const ListDialog = ({ title }: ListDialogProps) => {
               className='col-span-3'
               placeholder='List Title'
             />
+          </div>
+          <div className='grid grid-cols-4 items-center gap-4'>
+            <label className='col-span-1'>Color:</label>
+            <div className='col-span-3 flex gap-2'>
+              <label>
+                <input
+                  type='radio'
+                  name='color'
+                  value='green'
+                  checked={listColor === 'green'}
+                  onChange={(e) => setListColor(e.target.value)}
+                />
+                Green
+              </label>
+              <label>
+                <input
+                  type='radio'
+                  name='color'
+                  value='red'
+                  checked={listColor === 'red'}
+                  onChange={(e) => setListColor(e.target.value)}
+                />
+                Red
+              </label>
+              <label>
+                <input
+                  type='radio'
+                  name='color'
+                  value='yellow'
+                  checked={listColor === 'yellow'}
+                  onChange={(e) => setListColor(e.target.value)}
+                />
+                Yellow
+              </label>
+              <label>
+                <input
+                  type='radio'
+                  name='color'
+                  value='blue'
+                  checked={listColor === 'blue'}
+                  onChange={(e) => setListColor(e.target.value)}
+                />
+                Blue
+              </label>
+            </div>
           </div>
         </div>
         <DialogFooter>

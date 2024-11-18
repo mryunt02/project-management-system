@@ -37,7 +37,7 @@ export const getProjectById = async (req: Request, res: Response) => {
   try {
     const project = await Project.findById(id).populate({
       path: 'lists',
-      select: 'name events', // Select only name and events from lists
+      select: 'name color events', // Select only name and events from lists
       populate: {
         path: 'events', // Assuming events is a reference to the Event model
         select: 'title description deadline attendees', // Select the fields you want from events
