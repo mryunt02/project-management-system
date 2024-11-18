@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   DropdownMenu,
   DropdownMenuItem,
@@ -8,18 +8,41 @@ import {
   DropdownMenuTrigger,
 } from './ui/dropdown-menu';
 import { Delete, Edit, MoreHorizontal } from 'lucide-react';
-import { useDispatch } from 'react-redux';
-import { AppDispatch } from '@/redux/store';
-import { updateListInProject } from '@/redux/reducers/projectReducer';
-import { Dialog, DialogHeader, DialogTrigger } from './ui/dialog';
-import { DialogContent, DialogDescription } from '@radix-ui/react-dialog';
+import { useDispatch, useSelector } from 'react-redux';
+import { AppDispatch, RootState } from '@/redux/store';
 import { Input } from './ui/input';
 import ListDialog from './list-dialog';
+import { deleteListFromProject } from '@/redux/reducers/projectReducer';
 
 const ProjectDropdown = ({ title }: { title: string }) => {
+  const [deleteList, setDeleteList] = useState(false);
+  const dispatch = useDispatch<AppDispatch>();
+  const { list, projectId } = useSelector((state: RootState) => {
+    if (!state.projects.selectedProject) {
+      return { list: null, projectId: null };
+    }
+    const projectId = state.projects.selectedProject._id;
+    const list = state.projects.selectedProject.lists.find(
+      (list) => list.name === title
+    );
+
+    return { list, projectId };
+  });
+
+  useEffect(() => {
+    if (deleteList && projectId && list?._id) {
+      dispatch(
+        deleteListFromProject({ projectId: projectId, listId: list._id })
+      ).then(() => {
+        window.location.reload(); // Reload the page after deleting the list
+      });
+    }
+  }, [deleteList, projectId, list, dispatch]);
+
   const handleDeleteList = () => {
-    console.log('Delete list');
+    setDeleteList(true);
   };
+
   return (
     <>
       <DropdownMenu>

@@ -104,6 +104,16 @@ export const updateEventInList = createAsyncThunk(
   }
 );
 
+export const deleteListFromProject = createAsyncThunk(
+  'projects/deleteListFromProject',
+  async ({ projectId, listId }: { projectId: string; listId: string }) => {
+    const response = await axios.delete(
+      `http://localhost:5001/api/projects/${projectId}/lists/${listId}`
+    ); // Your API endpoint
+    return response.data; // Assuming the response contains the deleted list ID or confirmation
+  }
+);
+
 const projectsSlice = createSlice({
   name: 'projects',
   initialState: {
@@ -227,6 +237,21 @@ const projectsSlice = createSlice({
         }
       })
       .addCase(updateListInProject.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message ?? null;
+      })
+      .addCase(deleteListFromProject.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(deleteListFromProject.fulfilled, (state, action) => {
+        state.loading = false;
+        const { projectId, listId } = action.meta.arg;
+        const project = state.projects.find((p) => p._id === projectId);
+        if (project) {
+          project.lists = project.lists.filter((l) => l._id !== listId); // Remove the deleted list
+        }
+      })
+      .addCase(deleteListFromProject.rejected, (state, action) => {
         state.loading = false;
         state.error = action.error.message ?? null;
       });

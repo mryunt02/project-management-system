@@ -13,13 +13,13 @@ const ProjectList = ({ title, events, color }: ProjectListProps) => {
   const getColorClass = (color: string): string => {
     switch (color) {
       case 'green':
-        return 'bg-green-500';
+        return 'bg-green-400';
       case 'red':
-        return 'bg-red-500';
+        return 'bg-red-400';
       case 'yellow':
-        return 'bg-yellow-500';
+        return 'bg-yellow-400';
       case 'blue':
-        return 'bg-blue-500';
+        return 'bg-blue-400';
       default:
         return 'bg-[#101204]'; // Default color if none match
     }
@@ -32,8 +32,8 @@ const ProjectList = ({ title, events, color }: ProjectListProps) => {
             color
           )} rounded-t-xl`}
         >
-          <p className='font-medium text-[#b6c2cf]'>{title}</p>
-          <div className='flex gap-2 text-gray-400'>
+          <p className='font-medium text-white'>{title}</p>
+          <div className='flex gap-2 text-white'>
             <ProjectDropdown title={title} />
             <button className='p-1 hover:bg-white/10 rounded'>
               <FlipHorizontal2 size={18} />

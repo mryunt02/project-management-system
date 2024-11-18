@@ -85,3 +85,29 @@ export const updateList = async (
     res.status(500).json({ message: 'Failed to update list', error });
   }
 };
+
+// Delete a list under a project
+export const deleteList = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
+  const { projectId, listId } = req.params;
+
+  try {
+    const list = await List.findOneAndDelete({ _id: listId, projectId });
+
+    if (!list) {
+      res.status(404).json({ message: 'List not found' });
+      return;
+    }
+
+    // Remove the list reference from the project
+    await Project.findByIdAndUpdate(projectId, {
+      $pull: { lists: listId },
+    });
+
+    res.status(200).json({ message: 'List deleted successfully' });
+  } catch (error) {
+    res.status(500).json({ message: 'Failed to delete list', error });
+  }
+};

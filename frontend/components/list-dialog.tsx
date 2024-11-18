@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '@/redux/store';
-import { updateListInProject } from '@/redux/reducers/projectReducer';
+import {
+  deleteListFromProject,
+  updateListInProject,
+} from '@/redux/reducers/projectReducer';
 import {
   Dialog,
   DialogTrigger,
@@ -75,7 +78,8 @@ const ListDialog = ({ title }: ListDialogProps) => {
           <DialogDescription>Make changes to your list here.</DialogDescription>
         </DialogHeader>
         <div className='grid gap-4 py-4'>
-          <div className='grid grid-cols-4 items-center gap-4'>
+          <div className='flex flex-col items-baseline gap-4'>
+            <label className='col-span-1'>Name:</label>
             <Input
               id='title'
               value={listTitle}
@@ -84,49 +88,19 @@ const ListDialog = ({ title }: ListDialogProps) => {
               placeholder='List Title'
             />
           </div>
-          <div className='grid grid-cols-4 items-center gap-4'>
+          <div className='flex flex-col items-baseline  gap-4'>
             <label className='col-span-1'>Color:</label>
             <div className='col-span-3 flex gap-2'>
-              <label>
-                <input
-                  type='radio'
-                  name='color'
-                  value='green'
-                  checked={listColor === 'green'}
-                  onChange={(e) => setListColor(e.target.value)}
+              {['green', 'red', 'yellow', 'blue'].map((color) => (
+                <div
+                  key={color}
+                  onClick={() => setListColor(color)}
+                  className={`w-10 h-10 cursor-pointer rounded ${
+                    listColor === color ? 'ring-2 ring-purple-500' : ''
+                  }`}
+                  style={{ backgroundColor: color }}
                 />
-                Green
-              </label>
-              <label>
-                <input
-                  type='radio'
-                  name='color'
-                  value='red'
-                  checked={listColor === 'red'}
-                  onChange={(e) => setListColor(e.target.value)}
-                />
-                Red
-              </label>
-              <label>
-                <input
-                  type='radio'
-                  name='color'
-                  value='yellow'
-                  checked={listColor === 'yellow'}
-                  onChange={(e) => setListColor(e.target.value)}
-                />
-                Yellow
-              </label>
-              <label>
-                <input
-                  type='radio'
-                  name='color'
-                  value='blue'
-                  checked={listColor === 'blue'}
-                  onChange={(e) => setListColor(e.target.value)}
-                />
-                Blue
-              </label>
+              ))}
             </div>
           </div>
         </div>
