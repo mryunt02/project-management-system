@@ -17,7 +17,6 @@ const ProjectPage = ({ params }: ProjectPageProps) => {
   const project = useSelector(
     (state: RootState) => state.projects.selectedProject
   );
-
   useEffect(() => {
     dispatch(fetchProjectById(id));
   }, [dispatch, id]);
@@ -26,8 +25,7 @@ const ProjectPage = ({ params }: ProjectPageProps) => {
     return <div>Loading...</div>;
   }
 
-  const lists = project.lists || [];
-
+  const { lists } = project;
   return (
     <div className='overflow-scroll w-full'>
       <ul className='flex gap-3 h-full p-4 overflow-x-auto'>
