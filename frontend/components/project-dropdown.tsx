@@ -7,10 +7,9 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from './ui/dropdown-menu';
-import { Delete, Edit, MoreHorizontal } from 'lucide-react';
+import { Delete, MoreHorizontal } from 'lucide-react';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '@/redux/store';
-import { Input } from './ui/input';
 import ListDialog from './list-dialog';
 import { deleteListFromProject } from '@/redux/reducers/projectReducer';
 

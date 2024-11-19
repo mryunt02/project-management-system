@@ -8,23 +8,31 @@ import {
   DialogTrigger,
 } from './ui/dialog';
 import { DialogClose, DialogTitle } from '@radix-ui/react-dialog';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { createEventInList } from '../redux/reducers/projectReducer'; // Adjust the import path as necessary
 import { Button } from './ui/button';
 // Adjust the import path as necessary
-import { AppDispatch, RootState } from '@/redux/store';
+import { AppDispatch } from '@/redux/store';
 import { Plus } from 'lucide-react';
 import { Input } from './ui/input';
 import { Textarea } from './ui/textarea';
 
-const AddEventDialog = ({ projectId, listId }) => {
+interface AddEventDialogProps {
+  projectId: string;
+  listId: string;
+}
+
+const AddEventDialog: React.FC<AddEventDialogProps> = ({
+  projectId,
+  listId,
+}) => {
   const dispatch = useDispatch<AppDispatch>();
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [attendees, setAttendees] = useState('');
   const [isDialogOpen, setIsDialogOpen] = useState(false);
 
-  const handleAddEvent = (e) => {
+  const handleAddEvent = (e: { preventDefault: () => void }) => {
     e.preventDefault(); // Prevent the default form submission behavior
 
     const newEvent = {

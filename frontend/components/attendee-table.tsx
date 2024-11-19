@@ -9,11 +9,7 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
-interface Attendee {
-  role: string;
-}
-
-export function AttendeesTable({ attendees }: { attendees: Attendee[] }) {
+export function AttendeesTable({ attendees }: { attendees: string[] }) {
   console.log(attendees);
   return (
     <Table>

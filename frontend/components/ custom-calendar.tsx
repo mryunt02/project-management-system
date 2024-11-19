@@ -43,8 +43,10 @@ const events = [
 const CustomCalendar = () => {
   const [currentMonth, setCurrentMonth] = useState(new Date());
 
-  const daysInMonth = (month, year) => new Date(year, month + 1, 0).getDate();
-  const firstDayOfMonth = (month, year) => new Date(year, month, 1).getDay();
+  const daysInMonth = (month: number, year: number) =>
+    new Date(year, month + 1, 0).getDate();
+  const firstDayOfMonth = (month: number, year: number) =>
+    new Date(year, month, 1).getDay();
 
   const renderCalendar = () => {
     const month = currentMonth.getMonth();
@@ -55,11 +57,7 @@ const CustomCalendar = () => {
     // Get previous month's details
     const prevMonth = month === 0 ? 11 : month - 1;
     const prevMonthYear = month === 0 ? year - 1 : year;
-    const prevMonthDays = daysInMonth(prevMonth, prevMonthYear);
-
-    // Get next month's details
-    const nextMonth = month === 11 ? 0 : month + 1;
-    const nextMonthYear = month === 11 ? year + 1 : year;
+    const prevMonthDays = daysInMonth(prevMonth, prevMonthYear); // Get next month's details
     const totalDaysDisplayed = 42; // 6 weeks (6 * 7 = 42)
     const totalDaysInCalendar = totalDaysDisplayed - firstDay - days;
 

@@ -1,4 +1,4 @@
-import { FlipHorizontal2, MoreHorizontal, Plus } from 'lucide-react';
+import { FlipHorizontal2 } from 'lucide-react';
 import { EventDialog } from './event-dialog';
 import ProjectDropdown from './project-dropdown';
 import AddEventDialog from './add-event-dialog';
@@ -60,7 +60,7 @@ const ProjectList = ({ title, events, color }: ProjectListProps) => {
             <EventDialog key={index} eventId={task._id} />
           ))}
 
-          <AddEventDialog projectId={projectId} listId={listId} />
+          <AddEventDialog projectId={projectId || ''} listId={listId || ''} />
         </div>
       </div>
     </li>

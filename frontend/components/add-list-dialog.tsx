@@ -33,6 +33,7 @@ const AddListDialog: React.FC<AddListDialogProps> = ({ projectId }) => {
     const newList = {
       _id: 'new_id', // Generate a unique ID for the new list
       name: listName,
+      color: '#FFFFFF', // Add a default color or generate one
       events: [],
     };
 

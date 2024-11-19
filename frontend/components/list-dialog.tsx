@@ -1,10 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '@/redux/store';
-import {
-  deleteListFromProject,
-  updateListInProject,
-} from '@/redux/reducers/projectReducer';
+import { updateListInProject } from '@/redux/reducers/projectReducer';
 import {
   Dialog,
   DialogTrigger,

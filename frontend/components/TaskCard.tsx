@@ -1,5 +1,3 @@
-import { Plus } from 'lucide-react';
-
 interface TaskCardProps {
   title: string;
   description: string;
