@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch } from '@/redux/store';
 import { fetchProjects } from '@/redux/reducers/projectReducer';
 interface Project {
-  _id: string;
+  id: string;
   name: string;
   members?: number;
   dueDate?: string;

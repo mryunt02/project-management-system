@@ -6,7 +6,7 @@ import Link from 'next/link';
 
 interface ProjectsProps {
   projects: Array<{
-    _id: string;
+    id: string;
     name: string;
     members?: number;
     dueDate?: string;
