@@ -27,7 +27,7 @@ const Projects: React.FC<ProjectsProps> = ({ projects }) => {
         <ProjectDialog />
         {/* Project Cards */}
         {projects.map((project) => (
-          <Link href={`projects/${project._id}`} key={project._id}>
+          <Link href={`/projects/${project._id}`} key={project._id}>
             <Project
               name={project.name}
               members={project.members}
