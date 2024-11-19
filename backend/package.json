@@ -4,8 +4,8 @@
   "description": "User authentication with email and password",
   "main": "server.ts",
   "scripts": {
-    "start": "NODE_OPTIONS=--openssl-legacy-provider node dist/server.js",
-    "dev": "NODE_OPTIONS=--openssl-legacy-provider nodemon --exec ts-node src/server.ts",
+    "start": "node dist/server.js",
+    "dev": "nodemon --exec ts-node src/server.ts",
     "build": "tsc"
   },
   "dependencies": {
@@ -23,6 +23,7 @@
     "@types/jsonwebtoken": "^9.0.0",
     "@types/mongoose": "^5.10.2",
     "nodemon": "^2.0.20",
+    "ts-node": "^10.9.2",
     "typescript": "^5.0.0"
   }
 }
