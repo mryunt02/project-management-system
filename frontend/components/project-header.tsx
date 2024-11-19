@@ -2,7 +2,7 @@
 import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import yuntlogogray from '@/images/yunt-logo-gray.png';
+import yuntlogogray from '@/images/yunt-logo.png';
 import { usePathname, useRouter } from 'next/navigation';
 
 const Header = () => {
