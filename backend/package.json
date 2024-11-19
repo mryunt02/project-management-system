@@ -4,8 +4,8 @@
   "description": "User authentication with email and password",
   "main": "server.ts",
   "scripts": {
-    "start": "node dist/server.js",
-    "dev": "nodemon src/server.ts",
+    "start": "NODE_OPTIONS=--openssl-legacy-provider node dist/server.js",
+    "dev": "NODE_OPTIONS=--openssl-legacy-provider nodemon --exec ts-node src/server.ts",
     "build": "tsc"
   },
   "dependencies": {
