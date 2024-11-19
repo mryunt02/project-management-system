@@ -1,11 +1,11 @@
 'use client';
-
 import React, { useEffect } from 'react';
 import Projects from '@/components/projects';
 import useAuthenticate from '@/hooks/use-authenticate';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch } from '@/redux/store';
 import { fetchProjects } from '@/redux/reducers/projectReducer';
+
 interface Project {
   _id: string;
   name: string;
@@ -23,8 +23,10 @@ export default function Home() {
   );
 
   useEffect(() => {
-    dispatch(fetchProjects());
-  }, [dispatch]);
+    if (isAuthenticated) {
+      dispatch(fetchProjects());
+    }
+  }, [dispatch, isAuthenticated]);
 
   if (!isAuthenticated) {
     return null;

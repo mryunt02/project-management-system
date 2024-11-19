@@ -17,12 +17,19 @@ const ProjectPage = ({ params }: ProjectPageProps) => {
   const project = useSelector(
     (state: RootState) => state.projects.selectedProject
   );
+  const error = useSelector((state: RootState) => state.projects.error);
+
   useEffect(() => {
+    console.log('Fetching project with ID:', id);
     dispatch(fetchProjectById(id));
   }, [dispatch, id]);
 
   if (!project) {
     return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div>Error: {error}</div>;
   }
 
   const { lists } = project;
