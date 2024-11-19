@@ -2,7 +2,7 @@
 import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import yuntlogogray from '@/images/yunt-logo.png';
+import yuntlogogray from '@/images/yunt-logo-gray.png';
 import { usePathname, useRouter } from 'next/navigation';
 
 const Header = () => {
@@ -10,6 +10,7 @@ const Header = () => {
   const pathname = usePathname();
   const popoverRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
+  const [token, setToken] = useState<string | null>(null);
 
   const togglePopover = () => {
     setIsPopoverOpen(!isPopoverOpen);
@@ -23,6 +24,7 @@ const Header = () => {
       setIsPopoverOpen(false);
     }
   };
+
   useEffect(() => {
     document.addEventListener('mousedown', handleClickOutside);
     return () => {
@@ -30,15 +32,25 @@ const Header = () => {
     };
   }, []);
 
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const storedToken = localStorage.getItem('token');
+      setToken(storedToken);
+    }
+  }, []);
+
   const handleLogout = () => {
-    localStorage.removeItem('token');
-    localStorage.removeItem('user');
-    router.push('/login');
+    if (typeof window !== 'undefined') {
+      localStorage.removeItem('token');
+      localStorage.removeItem('user');
+      router.push('/login');
+    }
   };
-  const token = localStorage.getItem('token');
+
   if (!token) {
     return null;
   }
+
   return (
     <header className='flex justify-between px-5 py-2 border-b border-blue-300 items-center'>
       <Link href='/'>

@@ -2,11 +2,16 @@
 
 import React, { useEffect } from 'react';
 import Projects from '@/components/projects';
-import { ProjectDialog } from '@/components/project-dialog';
 import useAuthenticate from '@/hooks/use-authenticate';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch } from '@/redux/store';
 import { fetchProjects } from '@/redux/reducers/projectReducer';
+interface Project {
+  _id: string;
+  name: string;
+  members?: number;
+  dueDate?: string;
+}
 
 export default function Home() {
   const dispatch = useDispatch<AppDispatch>();
