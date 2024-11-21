@@ -20,7 +20,6 @@ const ProjectPage = ({ params }: ProjectPageProps) => {
   const error = useSelector((state: RootState) => state.projects.error);
 
   useEffect(() => {
-    console.log('Fetching project with ID:', id);
     dispatch(fetchProjectById(id));
   }, [dispatch, id]);
 

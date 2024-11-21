@@ -47,12 +47,7 @@ export default function Home() {
           <h1 className='text-[24px]'>Projects</h1>
         </div>
         <div className='mt-4'>
-          <Projects
-            projects={projects}
-            onAddProject={() => {
-              console.log('first');
-            }}
-          />
+          <Projects projects={projects} />
         </div>
       </div>
     </div>

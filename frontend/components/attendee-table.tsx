@@ -10,7 +10,6 @@ import {
   TableRow,
 } from '@/components/ui/table';
 export function AttendeesTable({ attendees }: { attendees: string[] }) {
-  console.log(attendees);
   return (
     <Table>
       <TableCaption>A list of event attendees.</TableCaption>

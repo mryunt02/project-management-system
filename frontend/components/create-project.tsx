@@ -31,7 +31,6 @@ const CreateProject = () => {
     dispatch(createProject(newProject))
       .then((response) => {
         // Handle success (e.g., show a success message or reset the form)
-        console.log('Project created successfully');
         setName('');
         setType('');
         setMembers('');

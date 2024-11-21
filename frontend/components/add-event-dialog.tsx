@@ -41,10 +41,6 @@ const AddEventDialog: React.FC<AddEventDialogProps> = ({
       attendees: attendees.split(', ').map((attendee) => attendee.trim()),
     };
 
-    console.log('Adding new event:', newEvent);
-    console.log('projectId:', projectId);
-    console.log('listId:', listId);
-
     dispatch(createEventInList({ projectId, listId, newEvent }));
     setIsDialogOpen(false); // Close the dialog after adding the event
     window.location.reload(); // Reload the page after adding the event

@@ -37,7 +37,6 @@ const ProjectList = ({ title, events, color }: ProjectListProps) => {
     )?._id;
     return { projectId, listId };
   });
-  console.log(projectId, listId);
   return (
     <li className='flex-shrink-0'>
       <div className='rounded-xl w-[272px] bg-[#101204]'>
