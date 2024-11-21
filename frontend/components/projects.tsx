@@ -32,6 +32,7 @@ const Projects: React.FC<ProjectsProps> = ({ projects }) => {
               name={project.name}
               members={project.members}
               dueDate={project.dueDate}
+              _id={project._id}
             />
           </Link>
         ))}
