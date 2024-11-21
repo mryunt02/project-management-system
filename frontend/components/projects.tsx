@@ -3,10 +3,10 @@ import React from 'react';
 import Project from './project';
 import { ProjectDialog } from './project-dialog';
 import Link from 'next/link';
-import { Delete } from 'lucide-react';
 import { useDispatch } from 'react-redux';
 import { deleteProject } from '@/redux/reducers/projectReducer';
 import { AppDispatch } from '@/redux/store';
+import { Button } from './ui/button';
 
 interface ProjectsProps {
   projects: Array<{
@@ -33,7 +33,7 @@ const Projects: React.FC<ProjectsProps> = ({ projects }) => {
         <ProjectDialog />
         {/* Project Cards */}
         {projects.map((project) => (
-          <div key={project._id}>
+          <div key={project._id} className='flex flex-col gap-1'>
             <Link href={`/projects/${project._id}`}>
               <Project
                 name={project.name}
@@ -42,15 +42,15 @@ const Projects: React.FC<ProjectsProps> = ({ projects }) => {
                 _id={project._id}
               />
             </Link>
-            <button
-              className='p-1.5 rounded-lg hover:bg-white/10 text-gray-300'
+            <Button
+              className='p-1.5 rounded-lg text-white '
               onClick={(event) => {
                 event.stopPropagation(); // Prevent the Link from being activated
                 dispatch(deleteProject(project._id)); // Dispatch the delete action
               }}
             >
-              <Delete size={18} stroke='white' />
-            </button>
+              Delete Project
+            </Button>
           </div>
         ))}
       </div>

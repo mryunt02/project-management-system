@@ -19,7 +19,7 @@ const Project: React.FC<ProjectProps> = ({ name, members = 0, dueDate }) => {
         alt='project image'
         className='h-[120px] w-full object-cover transition-transform duration-300 group-hover:scale-105'
       />
-      <div className='absolute bottom-0 left-0 right-0 p-4 z-20'>
+      <div className='absolute bottom-0 left-0 right-0 p-4 pb-0 z-20'>
         <div className='flex justify-between items-center mb-2'>
           <h3 className='text-lg font-semibold text-white'>{name}</h3>
         </div>
