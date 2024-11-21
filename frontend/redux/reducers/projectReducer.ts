@@ -137,6 +137,14 @@ export const createEventInList = createAsyncThunk(
   }
 );
 
+export const deleteProject = createAsyncThunk(
+  'projects/deleteProject',
+  async (projectId: string) => {
+    await axios.delete(`http://localhost:5001/api/projects/${projectId}`); // Your API endpoint
+    return projectId; // Return the project ID for removal from the state
+  }
+);
+
 const projectsSlice = createSlice({
   name: 'projects',
   initialState: {
@@ -293,6 +301,19 @@ const projectsSlice = createSlice({
         }
       })
       .addCase(createEventInList.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message ?? null;
+      })
+      .addCase(deleteProject.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(deleteProject.fulfilled, (state, action) => {
+        state.loading = false;
+        state.projects = state.projects.filter(
+          (project) => project._id !== action.payload
+        ); // Remove the deleted project
+      })
+      .addCase(deleteProject.rejected, (state, action) => {
         state.loading = false;
         state.error = action.error.message ?? null;
       });
