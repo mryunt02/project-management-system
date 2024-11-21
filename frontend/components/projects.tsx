@@ -3,6 +3,10 @@ import React from 'react';
 import Project from './project';
 import { ProjectDialog } from './project-dialog';
 import Link from 'next/link';
+import { Delete } from 'lucide-react';
+import { useDispatch } from 'react-redux';
+import { deleteProject } from '@/redux/reducers/projectReducer';
+import { AppDispatch } from '@/redux/store';
 
 interface ProjectsProps {
   projects: Array<{
@@ -15,6 +19,8 @@ interface ProjectsProps {
 }
 
 const Projects: React.FC<ProjectsProps> = ({ projects }) => {
+  const dispatch = useDispatch<AppDispatch>();
+
   return (
     <div className='p-6'>
       <div className='mb-6'>
@@ -27,14 +33,25 @@ const Projects: React.FC<ProjectsProps> = ({ projects }) => {
         <ProjectDialog />
         {/* Project Cards */}
         {projects.map((project) => (
-          <Link href={`/projects/${project._id}`} key={project._id}>
-            <Project
-              name={project.name}
-              members={project.members}
-              dueDate={project.dueDate}
-              _id={project._id}
-            />
-          </Link>
+          <div key={project._id}>
+            <Link href={`/projects/${project._id}`}>
+              <Project
+                name={project.name}
+                members={project.members}
+                dueDate={project.dueDate}
+                _id={project._id}
+              />
+            </Link>
+            <button
+              className='p-1.5 rounded-lg hover:bg-white/10 text-gray-300'
+              onClick={(event) => {
+                event.stopPropagation(); // Prevent the Link from being activated
+                dispatch(deleteProject(project._id)); // Dispatch the delete action
+              }}
+            >
+              <Delete size={18} stroke='white' />
+            </button>
+          </div>
         ))}
       </div>
     </div>
