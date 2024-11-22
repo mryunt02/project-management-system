@@ -1,24 +1,39 @@
 // frontend/components/CreateProject.tsx
-import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { AppDispatch } from '@/redux/store'; // Adjust the path as necessary
-import { createProject } from '@/redux/reducers/projectReducer'; // Adjust the path to your projectsSlice
-import { useRouter } from 'next/navigation';
+import React, { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { AppDispatch } from '@/redux/store';
+import { createProject } from '@/redux/reducers/projectReducer';
 import { Button } from './ui/button';
 import { Input } from './ui/input';
 import { Textarea } from './ui/textarea';
+import { RootState } from '@/redux/store'; // Adjust the import based on your store structure
 
 const CreateProject = () => {
   const [name, setName] = useState('');
   const [type, setType] = useState('');
   const [members, setMembers] = useState('');
   const [description, setDescription] = useState('');
+  const [, setError] = useState<string | null>(null); // State for error message
+  const [nameExists, setNameExists] = useState<boolean>(false); // State to check if name exists
 
   const dispatch = useDispatch<AppDispatch>();
-  const router = useRouter();
+  const projects = useSelector((state: RootState) => state.projects.projects); // Get projects from Redux store
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  // Effect to check if the project name already exists
+  useEffect(() => {
+    const existingProject = projects.find((project) => project.name === name);
+    setNameExists(!!existingProject);
+  }, [name, projects]);
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault(); // Prevent the default form submission behavior
+
+    // Check if the project name already exists
+    if (nameExists) {
+      setError('Project with this name already exists.'); // Set error message
+      return; // Prevent form submission
+    }
+
     const projectMembers = members.split(',').map((member) => member.trim()); // Convert to array
 
     const newProject = {
@@ -28,25 +43,28 @@ const CreateProject = () => {
       description,
     };
 
-    dispatch(createProject(newProject))
-      .then((response) => {
-        // Handle success (e.g., show a success message or reset the form)
-        setName('');
-        setType('');
-        setMembers('');
-        setDescription('');
-
-        const projectId = response.payload._id; // Make sure your API returns the project ID
-        router.push(`/projects/${projectId}`);
-      })
-      .catch((error) => {
-        // Handle error (e.g., show an error message)
+    try {
+      await dispatch(createProject(newProject)).unwrap();
+      // Handle success (e.g., show a success message or reset the form)
+      setName('');
+      setType('');
+      setMembers('');
+      setDescription('');
+      setError(null);
+    } catch (error) {
+      if (error instanceof Error) {
         console.error('Failed to create project', error);
-      });
+        setError(error.message);
+      } else {
+        console.error('Failed to create project', error);
+        setError('An unknown error occurred.');
+      }
+    }
   };
 
   return (
     <form onSubmit={handleSubmit} className='space-y-4 mt-4'>
+      {/* Display error message */}
       <Input
         type='text'
         placeholder='Project Name'
@@ -55,6 +73,12 @@ const CreateProject = () => {
         required
         className='border p-2 w-full'
       />
+      {nameExists && (
+        <div className='text-red-500'>
+          Project with this name already exists.
+        </div>
+      )}{' '}
+      {/* Validation error */}
       <Input
         type='text'
         placeholder='Project Type'

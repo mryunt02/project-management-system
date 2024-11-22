@@ -8,6 +8,14 @@ export const createProject = async (req: Request, res: Response) => {
   try {
     const { name, type, members, description } = req.body;
 
+    // Check if a project with the same name already exists
+    const existingProject = await Project.findOne({ name });
+    if (existingProject) {
+      return res
+        .status(400)
+        .json({ message: 'Project with this name already exists.' });
+    }
+
     const newProject: IProject = new Project({
       name,
       type,
