@@ -7,14 +7,14 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
-import { Plus } from 'lucide-react';
 import { useDispatch } from 'react-redux';
 import { addListToProject } from '@/redux/reducers/projectReducer'; // Adjust the import path as necessary
 import { AppDispatch } from '@/redux/store';
+import { DialogTrigger } from '@radix-ui/react-dialog';
+import { Plus } from 'lucide-react';
 
 interface AddListDialogProps {
   projectId: string;
@@ -44,10 +44,10 @@ const AddListDialog: React.FC<AddListDialogProps> = ({ projectId }) => {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <button className='flex items-center gap-1 p-3 text-white bg-[#ffffff3d] hover:bg-[#ffffff2e] rounded-lg text-sm w-full h-[42px]'>
+        <div className='flex items-center gap-1 p-3 text-white bg-[#ffffff3d] hover:bg-[#ffffff2e] rounded-lg text-sm w-full h-[42px] cursor-pointer'>
           <Plus />
           <span>Add New List</span>
-        </button>
+        </div>
       </DialogTrigger>
       <DialogContent className='sm:max-w-[425px]'>
         <DialogHeader>
