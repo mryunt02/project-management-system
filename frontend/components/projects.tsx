@@ -6,7 +6,7 @@ import Link from 'next/link';
 import { useDispatch } from 'react-redux';
 import { deleteProject } from '@/redux/reducers/projectReducer';
 import { AppDispatch } from '@/redux/store';
-import { Button } from './ui/button';
+import DeleteProject from './delete-project-dialog';
 
 interface ProjectsProps {
   projects: Array<{
@@ -20,6 +20,10 @@ interface ProjectsProps {
 
 const Projects: React.FC<ProjectsProps> = ({ projects }) => {
   const dispatch = useDispatch<AppDispatch>();
+
+  const handleDeleteProject = (projectId: string) => {
+    dispatch(deleteProject(projectId));
+  };
 
   return (
     <div className='p-6'>
@@ -42,15 +46,10 @@ const Projects: React.FC<ProjectsProps> = ({ projects }) => {
                 _id={project._id}
               />
             </Link>
-            <Button
-              className='p-1.5 rounded-lg text-white '
-              onClick={(event) => {
-                event.stopPropagation(); // Prevent the Link from being activated
-                dispatch(deleteProject(project._id)); // Dispatch the delete action
-              }}
-            >
-              Delete Project
-            </Button>
+            <DeleteProject
+              projectId={project._id}
+              handleDeleteProject={handleDeleteProject}
+            />
           </div>
         ))}
       </div>
