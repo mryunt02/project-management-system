@@ -67,14 +67,12 @@ const AddListDialog: React.FC<AddListDialogProps> = ({ projectId }) => {
           />
         </div>
         <DialogFooter>
-          <DialogClose>
-            <Button
-              type='button'
-              onClick={handleAddList}
-              disabled={!listName.trim()}
-            >
-              Add
-            </Button>
+          <DialogClose
+            onClick={handleAddList}
+            disabled={!listName.trim()}
+            className='bg-blue-400 px-1.5 py-2 rounded-md text-white hover:bg-blue-500 disabled:bg-blue-200'
+          >
+            Add List
           </DialogClose>
         </DialogFooter>
       </DialogContent>
