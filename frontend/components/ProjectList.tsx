@@ -45,7 +45,7 @@ const ProjectList = ({ title, events, color }: ProjectListProps) => {
             color
           )} rounded-t-xl`}
         >
-          <p className='font-medium text-white'>{title}</p>
+          <p className='font-medium text-white overflow-hidden'>{title}</p>
           <div className='flex gap-2 text-white'>
             <ProjectDropdown title={title} />
             <button className='p-1 hover:bg-white/10 rounded'>
