@@ -30,19 +30,19 @@ const ProjectSidebar = () => {
   }, [projects, activeProjectId, dispatch]);
 
   if (!project) {
-    return <div>Loading...</div>;
+    return <div className='p-4 text-white'>Loading...</div>;
   }
 
   return (
     <div className='p-4'>
-      <h2 className='text-xl font-bold mb-4 text-white'>{project.name}</h2>
-      <h3 className='text-lg font-semibold mb-2 text-white'>Projects</h3>
+      <h2 className='text-2xl font-bold mb-4 text-white'>{project.name}</h2>
+      <h3 className='text-lg font-semibold mb-2 text-gray-300'>Projects</h3>
       <ul className='space-y-2 text-white flex flex-col'>
         {projects.map((p) => (
           <Link
             key={p._id}
             href={`/projects/${p._id}`}
-            className={`text-white p-2 rounded ${
+            className={`text-white p-2 rounded transition duration-200 ease-in-out hover:bg-blue-500 ${
               currentPath === `/projects/${p._id}` ? 'bg-blue-400' : ''
             }`}
           >
