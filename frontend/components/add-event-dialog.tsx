@@ -11,11 +11,11 @@ import { DialogClose, DialogTitle } from '@radix-ui/react-dialog';
 import { useDispatch } from 'react-redux';
 import { createEventInList } from '../redux/reducers/projectReducer'; // Adjust the import path as necessary
 import { Button } from './ui/button';
-// Adjust the import path as necessary
 import { AppDispatch } from '@/redux/store';
 import { Plus } from 'lucide-react';
 import { Input } from './ui/input';
 import { Textarea } from './ui/textarea';
+import { Calendar } from './ui/calendar';
 
 interface AddEventDialogProps {
   projectId: string;
@@ -30,6 +30,7 @@ const AddEventDialog: React.FC<AddEventDialogProps> = ({
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [attendees, setAttendees] = useState('');
+  const [deadline, setDeadline] = useState<Date | undefined>(undefined);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
 
   const handleAddEvent = (e: { preventDefault: () => void }) => {
@@ -39,6 +40,7 @@ const AddEventDialog: React.FC<AddEventDialogProps> = ({
       title: title || '',
       description,
       attendees: attendees.split(', ').map((attendee) => attendee.trim()),
+      deadline,
     };
 
     dispatch(createEventInList({ projectId, listId, newEvent }));
@@ -52,6 +54,7 @@ const AddEventDialog: React.FC<AddEventDialogProps> = ({
       setTitle('');
       setDescription('');
       setAttendees('');
+      setDeadline(undefined);
     }
   }, [isDialogOpen]);
 
@@ -97,6 +100,14 @@ const AddEventDialog: React.FC<AddEventDialogProps> = ({
                 onChange={(e) => setAttendees(e.target.value)}
                 className='col-span-3'
                 placeholder='Attendees (comma separated)'
+              />
+            </div>
+            <div className='grid grid-cols-4 items-center gap-4'>
+              <Calendar
+                mode='single'
+                selected={deadline}
+                onSelect={setDeadline}
+                className='col-span-3'
               />
             </div>
           </div>

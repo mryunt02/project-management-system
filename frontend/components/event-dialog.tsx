@@ -17,6 +17,7 @@ import { Button } from '@/components/ui/button';
 import TaskCard from './TaskCard'; // Ensure TaskCard is imported
 import { AppDispatch, RootState } from '@/redux/store';
 import { AttendeesTable } from './attendee-table';
+import { Calendar } from './ui/calendar';
 
 export function EventDialog({ eventId }: { eventId: string }) {
   const dispatch = useDispatch<AppDispatch>();
@@ -43,6 +44,7 @@ export function EventDialog({ eventId }: { eventId: string }) {
   const [title, setTitle] = useState(event?.title);
   const [description, setDescription] = useState('');
   const [attendees, setAttendees] = useState('');
+  const [deadline, setDeadline] = useState<Date | null>(null);
 
   // Effect to set state when event prop changes
   useEffect(() => {
@@ -50,13 +52,16 @@ export function EventDialog({ eventId }: { eventId: string }) {
       setTitle(event.title);
       setDescription(event.description);
       setAttendees(event.attendees.join(', '));
+      setDeadline(event.deadline ? new Date(event.deadline) : null);
     }
   }, [event]);
+
   const handleUpdateEvent = () => {
     const updatedEvent = {
       title: title || '',
       description,
       attendees: attendees.split(', ').map((attendee) => attendee.trim()),
+      deadline,
     };
 
     if (!event) return;
@@ -65,6 +70,7 @@ export function EventDialog({ eventId }: { eventId: string }) {
       updateEventInList({ projectId, listId, eventId: event._id, updatedEvent })
     );
   };
+
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -94,8 +100,16 @@ export function EventDialog({ eventId }: { eventId: string }) {
               id='description'
               value={description}
               onChange={(e) => setDescription(e.target.value)}
-              className='col-span-3 h-[200px]'
+              className='col-span-3 h-[100px]'
               placeholder='Event Description'
+            />
+          </div>
+          <div className='grid grid-cols-4 items-center gap-4'>
+            <Calendar
+              mode='single'
+              selected={deadline}
+              onSelect={setDeadline}
+              className='col-span-3'
             />
           </div>
           {event && <AttendeesTable attendees={event.attendees} />}
