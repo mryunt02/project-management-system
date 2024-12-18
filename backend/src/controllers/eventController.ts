@@ -47,6 +47,19 @@ export const getEvents = async (req: Request, res: Response): Promise<void> => {
   }
 };
 
+// Get all events across all projects and lists
+export const getAllEvents = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
+  try {
+    const events = await Event.find();
+    res.status(200).json(events);
+  } catch (error) {
+    res.status(500).json({ message: 'Failed to get all events', error });
+  }
+};
+
 // Update an event under a list
 export const updateEvent = async (
   req: Request,
